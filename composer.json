@@ -1,0 +1,13 @@
+{
+    "require": {
+        "php-http/curl-client": "^2.2",
+        "nyholm/psr7": "^1.4",
+        "php-http/message": "^1.11",
+        "florianv/exchanger": "^2.7",
+        "florianv/swap": "^4.3",
+        "stripe/stripe-php": "^8.12",
+        "phpmailer/phpmailer": "^6.6",
+        "wixel/gump": "^2.0",
+        "ext-gd": "*"
+    }
+}

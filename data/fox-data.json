@@ -1,0 +1,994 @@
+{
+  "data": [
+    {
+      "title": "Classic Flannel Plain Soft Grey",
+      "productPrice": "Price £163",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/CBT5-A1285-11_370gSpftGreyFlannel_FoxBrothersCloth_c8de4982-884e-41a8-9612-679f87568966.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "370/400g"
+        },
+        {
+          "IMPERIAL WEIGHT": "13/14oz"
+        },
+        {
+          "CLOTH CODE": "CL2-1"
+        },
+        {
+          "COLOUR": "Grey"
+        },
+        {
+          "PATTERN": "Plain"
+        }
+      ]
+    },
+    {
+      "title": "Classic Flannel Plain Mid Grey",
+      "productPrice": "Price £163",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/CBT5-A1285-22-370gMidGreyFlannel_ClassicFlannel_FoxBrothersCloth_75ffb68e-e1e6-4ca8-a7b0-c93cb643ea9c.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "370/400g"
+        },
+        {
+          "IMPERIAL WEIGHT": "13/14oz"
+        },
+        {
+          "CLOTH CODE": "CL2-2"
+        },
+        {
+          "COLOUR": "Grey"
+        },
+        {
+          "PATTERN": "Plain"
+        }
+      ]
+    },
+    {
+      "title": "Classic Flannel Plain Charcoal",
+      "productPrice": "Price £163",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/CBT5-A1285-33_370gCharcoalFlannel_ClassicFlannel_FoxBrothersCloth_83f7098b-4959-465e-b7e7-b6bceab440d7.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "370/400g"
+        },
+        {
+          "IMPERIAL WEIGHT": "13/14oz"
+        },
+        {
+          "CLOTH CODE": "CL2-3"
+        },
+        {
+          "COLOUR": "Charcoal"
+        },
+        {
+          "PATTERN": "Plain"
+        }
+      ]
+    },
+    {
+      "title": "Classic Flannel Plain Classic Black",
+      "productPrice": "Price £163",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/CBT5-A1285-54_370gMidnightFlannel_ClassicFlannel_FoxBrothersCloth_65124345-3cfb-49fc-8867-d011f75179a5.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "370/400g"
+        },
+        {
+          "IMPERIAL WEIGHT": "13/14oz"
+        },
+        {
+          "CLOTH CODE": "CL2-4"
+        },
+        {
+          "COLOUR": "Black"
+        },
+        {
+          "PATTERN": "Plain"
+        }
+      ]
+    },
+    {
+      "title": "Classic Flannel Plain Cricket White",
+      "productPrice": "Price £163",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/FS625-A1290-77_270gEcruFlannel_ClassicFlannel_FoxBrothersCloth_64f97727-f5ce-42ca-8f07-e411dbf93be6.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "370/400g"
+        },
+        {
+          "IMPERIAL WEIGHT": "13/14oz"
+        },
+        {
+          "CLOTH CODE": "CL2-5"
+        },
+        {
+          "COLOUR": "Ecru/White"
+        },
+        {
+          "PATTERN": "Plain"
+        }
+      ]
+    },
+    {
+      "title": "Classic Flannel Plain Oatmeal",
+      "productPrice": "Price £163",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/CL2-6.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "370/400g"
+        },
+        {
+          "IMPERIAL WEIGHT": "13/14oz"
+        },
+        {
+          "CLOTH CODE": "CL2-6"
+        },
+        {
+          "COLOUR": "Oatmeal"
+        },
+        {
+          "PATTERN": "Plain"
+        }
+      ]
+    },
+    {
+      "title": "Classic Flannel Plain Camel",
+      "productPrice": "Price £163",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/CL2-7.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "370/400g"
+        },
+        {
+          "IMPERIAL WEIGHT": "13/14oz"
+        },
+        {
+          "CLOTH CODE": "CL2-7"
+        },
+        {
+          "COLOUR": "Camel"
+        },
+        {
+          "PATTERN": "Plain"
+        }
+      ]
+    },
+    {
+      "title": "Classic Flannel Plain Light Brown",
+      "productPrice": "Price £163",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/VF19_15301e04-d36e-403c-b763-d0278cd6ba75.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "370/400g"
+        },
+        {
+          "IMPERIAL WEIGHT": "13/14oz"
+        },
+        {
+          "CLOTH CODE": "CL2-8"
+        },
+        {
+          "COLOUR": "Brown"
+        },
+        {
+          "PATTERN": "Plain"
+        }
+      ]
+    },
+    {
+      "title": "Classic Flannel Plain Brown",
+      "productPrice": "Price £163",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/CBT5-A1285-99_370gChocolateBrownFlannel_ClassicFlannel_FoxBrothersCloth_182cb251-e2e3-46dc-8724-f887be273168.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "370/400g"
+        },
+        {
+          "IMPERIAL WEIGHT": "13/14oz"
+        },
+        {
+          "CLOTH CODE": "CL2-9"
+        },
+        {
+          "COLOUR": "Brown"
+        },
+        {
+          "PATTERN": "Plain"
+        }
+      ]
+    },
+    {
+      "title": "Classic Flannel Plain Char-Brown",
+      "productPrice": "Price £163",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/CBT5-R1285-39_370gCharBrownFlannel_ClassicFlannel_FoxBrothersCloth_b6980621-b3cd-451b-99e0-54cc3973320e.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "370/400g"
+        },
+        {
+          "IMPERIAL WEIGHT": "13/14oz"
+        },
+        {
+          "CLOTH CODE": "CL2-10"
+        },
+        {
+          "COLOUR": "Char-Brown"
+        },
+        {
+          "PATTERN": "Plain"
+        }
+      ]
+    },
+    {
+      "title": "Classic Flannel Plain Slate Blue",
+      "productPrice": "Price £163",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/CL2-11.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "370/400g"
+        },
+        {
+          "IMPERIAL WEIGHT": "13/14oz"
+        },
+        {
+          "CLOTH CODE": "CL2-11"
+        },
+        {
+          "COLOUR": "Blue"
+        },
+        {
+          "PATTERN": "Plain"
+        }
+      ]
+    },
+    {
+      "title": "Classic Flannel Plain Denim Blue",
+      "productPrice": "Price £163",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/CL2-12.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "370/400g"
+        },
+        {
+          "IMPERIAL WEIGHT": "13/14oz"
+        },
+        {
+          "CLOTH CODE": "CL2-12"
+        },
+        {
+          "COLOUR": "Blue"
+        },
+        {
+          "PATTERN": "Plain"
+        }
+      ]
+    },
+    {
+      "title": "Classic Flannel Plain Char-Navy",
+      "productPrice": "Price £163",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/CBT5-R1285-37_370gCharNavyFlannel_ClassicFlannel_FoxBrothersCloth_2cf03734-8273-4b39-82da-0eb420bb5a7d.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "370/400g"
+        },
+        {
+          "IMPERIAL WEIGHT": "13/14oz"
+        },
+        {
+          "CLOTH CODE": "CL2-13"
+        },
+        {
+          "COLOUR": "Char-Navy"
+        },
+        {
+          "PATTERN": "Plain"
+        }
+      ]
+    },
+    {
+      "title": "Classic Flannel Plain Moss Green",
+      "productPrice": "Price £163",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/CL2-14.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "370/400g"
+        },
+        {
+          "IMPERIAL WEIGHT": "13/14oz"
+        },
+        {
+          "CLOTH CODE": "CL2-14"
+        },
+        {
+          "COLOUR": "Green"
+        },
+        {
+          "PATTERN": "Plain"
+        }
+      ]
+    },
+    {
+      "title": "Classic Flannel Plain Mid Green",
+      "productPrice": "Price £163",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/CL2-15.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "370/400g"
+        },
+        {
+          "IMPERIAL WEIGHT": "13/14oz"
+        },
+        {
+          "CLOTH CODE": "CL2-15"
+        },
+        {
+          "COLOUR": "Green"
+        },
+        {
+          "PATTERN": "Plain"
+        }
+      ]
+    },
+    {
+      "title": "Bottle Green, Admiral Blue & Stout Black Check",
+      "productPrice": "Price £158",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/SP1.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "400/430g"
+        },
+        {
+          "IMPERIAL WEIGHT": "14/15oz"
+        },
+        {
+          "CLOTH CODE": "SP1"
+        },
+        {
+          "COLOUR": "Multi"
+        },
+        {
+          "PATTERN": "Check"
+        }
+      ]
+    },
+    {
+      "title": "Bottle Brown & Admiral Blue Check",
+      "productPrice": "Price £158",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/SP2.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "400/430g"
+        },
+        {
+          "IMPERIAL WEIGHT": "14/15oz"
+        },
+        {
+          "CLOTH CODE": "SP2"
+        },
+        {
+          "COLOUR": "Multi"
+        },
+        {
+          "PATTERN": "Check"
+        }
+      ]
+    },
+    {
+      "title": "Golden Fog, Glaucous Blue & Tuscan Brown Check",
+      "productPrice": "Price £158",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/SP3.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "400/430g"
+        },
+        {
+          "IMPERIAL WEIGHT": "14/15oz"
+        },
+        {
+          "CLOTH CODE": "SP3"
+        },
+        {
+          "COLOUR": "Multi"
+        },
+        {
+          "PATTERN": "Check"
+        }
+      ]
+    },
+    {
+      "title": "Ash White, Saddle Brown & Bistre Gun Club",
+      "productPrice": "Price £158",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/SP4.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "400/430g"
+        },
+        {
+          "IMPERIAL WEIGHT": "14/15oz"
+        },
+        {
+          "CLOTH CODE": "SP4"
+        },
+        {
+          "COLOUR": "Multi"
+        },
+        {
+          "PATTERN": "Gunclub Check"
+        }
+      ]
+    },
+    {
+      "title": "Moss Green, Deer Brown & Frost Black Gun Club",
+      "productPrice": "Price £158",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/SP5.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "400/430g"
+        },
+        {
+          "IMPERIAL WEIGHT": "14/15oz"
+        },
+        {
+          "CLOTH CODE": "SP5"
+        },
+        {
+          "COLOUR": "Multi"
+        },
+        {
+          "PATTERN": "Gunclub Check"
+        }
+      ]
+    },
+    {
+      "title": "Alabaster, Tennis Court Green & Phthalo Green Gun Club",
+      "productPrice": "Price £158",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/SP6.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "400/430g"
+        },
+        {
+          "IMPERIAL WEIGHT": "14/15oz"
+        },
+        {
+          "CLOTH CODE": "SP6"
+        },
+        {
+          "COLOUR": "Multi"
+        },
+        {
+          "PATTERN": "Gunclub Check"
+        }
+      ]
+    },
+    {
+      "title": "Antique Pewter, Independence Blue & Frost Black Gun Club",
+      "productPrice": "Price £158",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/SP7.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "400/430g"
+        },
+        {
+          "IMPERIAL WEIGHT": "14/15oz"
+        },
+        {
+          "CLOTH CODE": "SP7"
+        },
+        {
+          "COLOUR": "Multi"
+        },
+        {
+          "PATTERN": "Gunclub Check"
+        }
+      ]
+    },
+    {
+      "title": "Ash White, Bistre & Robin Egg Blue Puppytooth",
+      "productPrice": "Price £158",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/SP8.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "400/430g"
+        },
+        {
+          "IMPERIAL WEIGHT": "14/15oz"
+        },
+        {
+          "CLOTH CODE": "SP8"
+        },
+        {
+          "COLOUR": "Multi"
+        },
+        {
+          "PATTERN": "Houndstooth"
+        }
+      ]
+    },
+    {
+      "title": "Shire Grey, Royal Blue & Ink Black Puppytooth",
+      "productPrice": "Price £158",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/SP9.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "400/430g"
+        },
+        {
+          "IMPERIAL WEIGHT": "14/15oz"
+        },
+        {
+          "CLOTH CODE": "SP9"
+        },
+        {
+          "COLOUR": "Multi"
+        },
+        {
+          "PATTERN": "Houndstooth"
+        }
+      ]
+    },
+    {
+      "title": "Ecru, Dried Moss & Ink Black Tattersall",
+      "productPrice": "Price £158",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/SP10.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "400/430g"
+        },
+        {
+          "IMPERIAL WEIGHT": "14/15oz"
+        },
+        {
+          "CLOTH CODE": "SP10"
+        },
+        {
+          "COLOUR": "Multi"
+        },
+        {
+          "PATTERN": "Houndstooth"
+        }
+      ]
+    },
+    {
+      "title": "Cigar Brown Barelycorn",
+      "productPrice": "Price £158",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/SP11.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "400/430g"
+        },
+        {
+          "IMPERIAL WEIGHT": "14/15oz"
+        },
+        {
+          "CLOTH CODE": "SP11"
+        },
+        {
+          "COLOUR": "Brown"
+        },
+        {
+          "PATTERN": "Barleycorn"
+        }
+      ]
+    },
+    {
+      "title": "Deep Wedgewood Blue Barelycorn",
+      "productPrice": "Price £158",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/SP12.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "400/430g"
+        },
+        {
+          "IMPERIAL WEIGHT": "14/15oz"
+        },
+        {
+          "CLOTH CODE": "SP12"
+        },
+        {
+          "COLOUR": "Blue"
+        },
+        {
+          "PATTERN": "Barleycorn"
+        }
+      ]
+    },
+    {
+      "title": "Arsenic Grey Barelycorn",
+      "productPrice": "Price £158",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/SP13.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "400/430g"
+        },
+        {
+          "IMPERIAL WEIGHT": "14/15oz"
+        },
+        {
+          "CLOTH CODE": "SP13"
+        },
+        {
+          "COLOUR": "Charcoal"
+        },
+        {
+          "PATTERN": "Barleycorn"
+        }
+      ]
+    },
+    {
+      "title": "Lauren Green, Independence Blue & Pine Needle Check",
+      "productPrice": "Price £158",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/SP14.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "400/430g"
+        },
+        {
+          "IMPERIAL WEIGHT": "14/15oz"
+        },
+        {
+          "CLOTH CODE": "SP14"
+        },
+        {
+          "COLOUR": "Multi"
+        },
+        {
+          "PATTERN": "Check"
+        }
+      ]
+    },
+    {
+      "title": "Forest Green, Stout Black & Kingfisher Blue Check",
+      "productPrice": "Price £158",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/SP15.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "400/430g"
+        },
+        {
+          "IMPERIAL WEIGHT": "14/15oz"
+        },
+        {
+          "CLOTH CODE": "SP15"
+        },
+        {
+          "COLOUR": "Multi"
+        },
+        {
+          "PATTERN": "Check"
+        }
+      ]
+    },
+    {
+      "title": "French Navy Pinstripe",
+      "productPrice": "Price £242",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/VF3.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "370/400g"
+        },
+        {
+          "IMPERIAL WEIGHT": "13/14oz"
+        },
+        {
+          "CLOTH CODE": "VF3"
+        },
+        {
+          "COLOUR": "Navy"
+        },
+        {
+          "PATTERN": "Stripe"
+        }
+      ]
+    },
+    {
+      "title": "Mushroom Grey & Blue Cheese Windowpane",
+      "productPrice": "Price £242",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/VF4.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "370/400g"
+        },
+        {
+          "IMPERIAL WEIGHT": "13/14oz"
+        },
+        {
+          "CLOTH CODE": "VF4"
+        },
+        {
+          "COLOUR": "Grey"
+        },
+        {
+          "PATTERN": "Windowpane"
+        }
+      ]
+    },
+    {
+      "title": "Tawny Brown & Black Windowpane",
+      "productPrice": "Price £242",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/VF5.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "370/400g"
+        },
+        {
+          "IMPERIAL WEIGHT": "13/14oz"
+        },
+        {
+          "CLOTH CODE": "VF5"
+        },
+        {
+          "COLOUR": "Brown"
+        },
+        {
+          "PATTERN": "Windowpane"
+        }
+      ]
+    },
+    {
+      "title": "Brown Stone & Dark Wood Windowpane",
+      "productPrice": "Price £242",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/VF6.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "370/400g"
+        },
+        {
+          "IMPERIAL WEIGHT": "13/14oz"
+        },
+        {
+          "CLOTH CODE": "VF6"
+        },
+        {
+          "COLOUR": "Brown"
+        },
+        {
+          "PATTERN": "Windowpane"
+        }
+      ]
+    },
+    {
+      "title": "Spruce Blue Prince of Wales Check",
+      "productPrice": "Price £242",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/VF8.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "400/430g"
+        },
+        {
+          "IMPERIAL WEIGHT": "14/15oz"
+        },
+        {
+          "CLOTH CODE": "VF8"
+        },
+        {
+          "COLOUR": "Blue"
+        },
+        {
+          "PATTERN": "Check"
+        }
+      ]
+    },
+    {
+      "title": "Char Brown Chalk Stripe",
+      "productPrice": "Price £242",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/vf10.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": ""
+        },
+        {
+          "IMPERIAL WEIGHT": ""
+        },
+        {
+          "CLOTH CODE": ""
+        },
+        {
+          "COLOUR": "Char-Brown"
+        },
+        {
+          "PATTERN": ""
+        }
+      ]
+    },
+    {
+      "title": "Independence Blue & Cloud Grey Chalk Stripe",
+      "productPrice": "Price £242",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/VF11.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "370/400g"
+        },
+        {
+          "IMPERIAL WEIGHT": "13/14oz"
+        },
+        {
+          "CLOTH CODE": "VF11"
+        },
+        {
+          "COLOUR": "Char-Navy"
+        },
+        {
+          "PATTERN": "Stripe"
+        }
+      ]
+    },
+    {
+      "title": "Beige, Forest Green & Black Puppytooth",
+      "productPrice": "Price £242",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/VF14.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "400/430g"
+        },
+        {
+          "IMPERIAL WEIGHT": "14/15oz"
+        },
+        {
+          "CLOTH CODE": "VF14"
+        },
+        {
+          "COLOUR": "Multi"
+        },
+        {
+          "PATTERN": "Houndstooth"
+        }
+      ]
+    },
+    {
+      "title": "Hickory, Carob & Black Puppytooth",
+      "productPrice": "Price £242",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/VF15.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "400/430g"
+        },
+        {
+          "IMPERIAL WEIGHT": "14/15oz"
+        },
+        {
+          "CLOTH CODE": "VF15"
+        },
+        {
+          "COLOUR": "Brown"
+        },
+        {
+          "PATTERN": "Houndstooth"
+        }
+      ]
+    },
+    {
+      "title": "Dove Grey Melange",
+      "productPrice": "Price £242",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/VF16.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "470/500g"
+        },
+        {
+          "IMPERIAL WEIGHT": "16/17oz"
+        },
+        {
+          "CLOTH CODE": "VF16"
+        },
+        {
+          "COLOUR": "Grey"
+        },
+        {
+          "PATTERN": "Plain"
+        }
+      ]
+    },
+    {
+      "title": "Prussian Blue Melange",
+      "productPrice": "Price £242",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/VF17_18f1d535-f947-4baf-ad72-bb69a114419b.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "370/400g"
+        },
+        {
+          "IMPERIAL WEIGHT": "13/14oz"
+        },
+        {
+          "CLOTH CODE": "VF17"
+        },
+        {
+          "COLOUR": "Blue"
+        },
+        {
+          "PATTERN": "Plain"
+        }
+      ]
+    },
+    {
+      "title": "Russet Brown Melange",
+      "productPrice": "Price £242",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/VF19.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "370/400g"
+        },
+        {
+          "IMPERIAL WEIGHT": "13/14oz"
+        },
+        {
+          "CLOTH CODE": "VF19"
+        },
+        {
+          "COLOUR": "Brown"
+        },
+        {
+          "PATTERN": "Plain"
+        }
+      ]
+    },
+    {
+      "title": "Admiral Blue Melange Plain Weave",
+      "productPrice": "Price £242",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/VF20.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "300/330g"
+        },
+        {
+          "IMPERIAL WEIGHT": "10/11oz"
+        },
+        {
+          "CLOTH CODE": "VF20"
+        },
+        {
+          "COLOUR": "Blue"
+        },
+        {
+          "PATTERN": "Plain"
+        }
+      ]
+    },
+    {
+      "title": "Misty Grey & White Chalk Stripe",
+      "productPrice": "Price £242",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/VF23.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "370/400g"
+        },
+        {
+          "IMPERIAL WEIGHT": "13/14oz"
+        },
+        {
+          "CLOTH CODE": "VF9"
+        },
+        {
+          "COLOUR": "Grey"
+        },
+        {
+          "PATTERN": "Stripe"
+        }
+      ]
+    },
+    {
+      "title": "Ecru & Roast Brown Puppytooth",
+      "productPrice": "Price £242",
+      "imageUrl": "https://foxflannel.com/cdn/shop/products/VF27.jpg",
+      "productMeta": [
+        {
+          "METRIC WEIGHT": "400/430g"
+        },
+        {
+          "IMPERIAL WEIGHT": "14/15oz"
+        },
+        {
+          "CLOTH CODE": "VF25"
+        },
+        {
+          "COLOUR": "Brown"
+        },
+        {
+          "PATTERN": "Houndstooth"
+        }
+      ]
+    }
+  ]
+}
