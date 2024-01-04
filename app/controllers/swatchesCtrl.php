@@ -61,57 +61,20 @@
     {
 
 
-        /*
-            $source = "foxflannel.com";
-            $source = "shop.dugdalebros.com";
-            $source = harrisons1863.com
-            $source = loropiana.com
-            */
-        /*
-            foxflannel.com MEta keys
-            COLOUR
-            PATTERN
-            CLOTH CODE
-            METRIC WEIGHT
-            IMPERIAL WEIGHT
-            */
-
-
-
-
+    
         $paramsQuery['page'] = (isset($_GET['page']) && is_numeric($_GET['page'])) ? $_GET['page'] : 1;
         $paramsQuery['limit'] = (isset($_GET['limit']) && is_numeric($_GET['limit'])) ? $_GET['limit'] : 20;
         $paramsQuery['offset'] = ($paramsQuery['page'] - 1) * $paramsQuery['limit'];
-
-
+        $paramsQuery['filteringActivate'] = (isset($_GET['filteringActivate']) && $_GET['filteringActivate'] != "") ? $_GET['filteringActivate'] : 'off';
         $paramsQuery['source'] = (isset($_GET['source']) && $_GET['source'] != "") ? $_GET['source'] : 'foxflannel.com';
 
-
-        if (isset($_GET['source']) && $_GET['source'] != "") {
-
-            $paramsQuery["source"] = trim($_GET['source']);
-        }
-
-        if (isset($_GET['colors']) && $_GET['colors'] != "") {
-
-            $paramsQuery["colors"] = trim($_GET['colors']);
-        }
-
-        if (isset($_GET['PATTERN']) && $_GET['PATTERN'] != "") {
-            $paramsQuery["pattern"] = trim($_GET['PATTERN']);
-        }
-
-        if (isset($_GET['METRIC_WEIGHT'])) {
-
-            $paramsQuery["metricWeight"] = trim(urldecode($_GET['METRIC_WEIGHT']));
-        }
-
-
-        if (isset($_GET['IMPERIAL_WEIGHT'])) {
-
-            $paramsQuery["imperialWeight"] = trim(urldecode($_GET['IMPERIAL_WEIGHT']));
-        }
-
+        if($paramsQuery['filteringActivate'] == 'on') :
+           $filteryParamKeys = $this->swatchModule->getSourceFilterStaticKeys($paramsQuery['source']);
+                 foreach($filteryParamKeys as $key => $filterParamKey) :
+                     if (isset($_GET[$filterParamKey]) && $_GET[$filterParamKey] != "") 
+                        $paramsQuery[$filterParamKey] = trim($_GET[$filterParamKey]);
+                endforeach;
+        endif;
 
 
         $data["meta"] = array(
@@ -127,10 +90,17 @@
         $data["meta"]['pages'] = ceil($totalMatched / $paramsQuery['limit']);
         $data["meta"]['source'] = $paramsQuery['source'];
         // refactored dynamic filter
+        /*
         $data['filters'] = $this->swatchModule->buildFilterDynamic($paramsQuery['source']);
-
+        */
+        $data['filters'] = $this->swatchModule->getCachedFilters($paramsQuery['source']);
+        
         return View::responseJson($data, 200);
+
     }
+
+
+   
 
 
 
@@ -305,19 +275,49 @@
 
 
 
-    public function buildFilters()
+    public function testBuildFilter()
     {
 
         /*
-        
-        $source = "shop.dugdalebros.com";
-        $source = harrisons1863.com
-        $source = loropiana.com
+
+        { name: "foxflannel", url: "foxflannel.com", active: false },
+        { name: "loropiana", url: "loropiana.com", active: false },
+        { name: "dugdalebros", url: "shop.dugdalebros.com", active: false },
+        { name: "harrisons", url: "harrisons1863.com", active: false },
+
         */
 
-        $source = "foxflannel.com";
+        $source = 'harrisons1863.com';
 
-        $filters = $this->swatchModule->buildFilters($source);
-        var_dump($filters);
+        $cacheDir = ABSPATH . 'cache/';
+        if (!is_dir($cacheDir)) {
+            mkdir($cacheDir, 0777, true);
+        }
+
+        $filename = "filer-$source.json";
+        $cacheFile = $cacheDir.$filename;
+
+        if (file_exists($cacheFile) ) {
+            // Load from cache file
+            $filterData = json_decode(file_get_contents($cacheFile), true);
+        }
+
+        else {
+            $filterData = [];
+        }
+
+
+        /*
+        $filterData = $this->swatchModule->buildFilterDynamic($source);
+        if(file_put_contents($cacheFile, json_encode($filterData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)))
+            echo "file created successfully";
+        */
+
+
+
+
+        var_dump($filterData);
+
+
     }
 }

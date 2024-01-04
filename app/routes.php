@@ -17,7 +17,7 @@ $route->get('/testmail', 'swatchesCtrl@testEmail');
 $route->get('/template', 'swatchesCtrl@loadSwatchTemplate');
 
 
-$route->get('/filters', 'swatchesCtrl@buildFilters');
+$route->get('/filters', 'swatchesCtrl@testBuildFilter');
 
 
 $route->otherwise(function () {
