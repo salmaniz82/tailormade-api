@@ -44,7 +44,73 @@ class swatchesModule
     }
 
 
-    public function applyFilters($filterKeys, &$query) {
+
+
+
+    public function getSourceFilterStaticKeys($source, $clean = false)
+    {
+
+        $outputArrayKeys = [];
+
+        if ($source == 'foxflannel.com')
+            $outputArrayKeys = ['COLOUR', 'PATTERN', 'METRIC_WEIGHT', 'IMPERIAL_WEIGHT'];
+
+        if ($source == 'shop.dugdalebros.com')
+            $outputArrayKeys = ['material', 'Width', 'Weight', 'Bunch_Name', 'Bunch_Number'];
+
+        if ($source == 'harrisons1863.com')
+            $outputArrayKeys = ['brand', 'color', 'weight', 'material', 'collection', 'stockLength', 'longestSingleLength'];
+
+        if ($source == 'loropiana.com')
+            $outputArrayKeys = ['size', 'Width', 'bunch', 'style', 'Family', 'Weight', 'Subfamily', 'Composition', 'Weight_g/_mu00b2', 'Mood'];
+
+        if ($clean == true) {
+            $withoutUnderScore = array_map(function ($value) {
+                return str_replace('_', ' ', $value);
+            }, $outputArrayKeys);
+
+            return $withoutUnderScore;
+        }
+
+        return $outputArrayKeys;
+    }
+
+
+
+
+    public function getSwatces($payload = null)
+    {
+
+        if ($payload) {
+            $this->swatchParams = $payload;
+            extract($payload);
+        }
+
+        $query = "SELECT SQL_CALC_FOUND_ROWS id, title, imageUrl, thumbnail, productPrice, productMeta, 
+                    source, status from swatches WHERE status = 1 ";
+
+        if (isset($source)) {
+            $string = " source = '{$source}'";
+            $query .= $this->appendQuery($query, $string);
+        }
+
+
+        if ($filteringActivate == 'on') :
+
+            $filterParamsKeys = $this->getSourceFilterStaticKeys($source);
+            $this->applyFilters($filterParamsKeys, $query);
+
+        endif;
+
+        $query .= " LIMIT {$offset},  {$limit}";
+        $stmt = $this->DB->connection->prepare($query);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function applyFilters($filterKeys, &$query)
+    {
 
         foreach ($filterKeys as $filter) {
             if (isset($this->swatchParams[$filter])) {
@@ -55,67 +121,22 @@ class swatchesModule
         }
     }
 
-
-    public function getSourceFilterStaticKeys($source, $clean = false){
-
-        $outputArrayKeys = [];
-
-         if($source == 'foxflannel.com') 
-             $outputArrayKeys = ['COLOUR', 'PATTERN', 'METRIC_WEIGHT', 'IMPERIAL_WEIGHT'];
-             
-         if($source == 'shop.dugdalebros.com')
-             $outputArrayKeys = ['material', 'Width', 'Weight', 'Bunch_Name', 'Bunch_Number'];
-
-         if($source == 'harrisons1863.com') 
-            $outputArrayKeys = ['brand', 'color', 'weight', 'material', 'collection', 'stockLength', 'longestSingleLength'];
-
-         if($source == 'loropiana.com') 
-           $outputArrayKeys = ['size', 'Width','bunch', 'style', 'Family', 'Weight', 'Subfamily', 'Composition', 'Weight_g/_mu00b2', 'Mood'];
-
-            if($clean == true) {
-                $withoutUnderScore = array_map(function($value) {
-                return str_replace('_', ' ', $value);
-                }, $outputArrayKeys);
-
-                return $withoutUnderScore;
-            }
-            
-           return $outputArrayKeys;
-
-    }
-
-
-
-
-    public function getSwatces($payload = null)
+    public function buildFilterQueryArgsString($metaKey, $metaMatchTerms)
     {
 
-        if ($payload) {
-           $this->swatchParams = $payload;
-           extract($payload);
-        }
+        /*
+        $static = " AND JSON_EXTRACT(productMeta, '$.\"KEY NAME\"') IN ($formattedTermString) ";  
+        */
 
-        $query = "SELECT SQL_CALC_FOUND_ROWS id, title, imageUrl, productPrice, productMeta, 
-                    source, status from swatches WHERE status = 1 ";
+        $metaMatchTermsArray = explode(',', $metaMatchTerms);
+        $quotedTermsArray = array_map(function ($metaMatchTerms) {
+            return "'" . $metaMatchTerms . "'";
+        }, $metaMatchTermsArray);
 
-        if (isset($source)) {
-            $string = " source = '{$source}'";
-            $query .= $this->appendQuery($query, $string);
-        }
-
-
-         if($filteringActivate == 'on' ) :
-
-             $filterParamsKeys = $this->getSourceFilterStaticKeys($source);
-             $this->applyFilters($filterParamsKeys, $query);
-
-         endif;
-
-        $query .= " LIMIT {$offset},  {$limit}";
-        $stmt = $this->DB->connection->prepare($query);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC);
+        $formattedTermString = implode(',', $quotedTermsArray);
+        $jsonPath = '$."' . $metaKey . '"';
+        $query = " AND JSON_UNQUOTE(JSON_EXTRACT(productMeta, '$jsonPath')) IN ($formattedTermString) ";
+        return $query;
     }
 
 
@@ -218,11 +239,11 @@ class swatchesModule
             */
 
             $filterHeader = $uniqueFilterKeys;
-            if($source == 'shop.dugdalebros.com') {
+            if ($source == 'shop.dugdalebros.com') {
                 $filterHeader = array_diff($filterHeader, ['Product SKU']);
             }
 
-            if($source == 'loropiana.com') {
+            if ($source == 'loropiana.com') {
                 $filterHeader = array_diff($filterHeader, ['style']);
             }
 
@@ -241,7 +262,7 @@ class swatchesModule
                     continue;
                 }
 
-                $items = array_column($values, 'key_value');            
+                $items = array_column($values, 'key_value');
                 $items = array_values(array_unique(array_filter($items, 'trim')));
                 if (!empty($items)) {
                     $cleanFilter[] = [
@@ -259,57 +280,34 @@ class swatchesModule
     }
 
 
-     public function buildFilterQueryArgsString($metaKey, $metaMatchTerms){
-
-        // break by , and convert to array 
-        $metaMatchTermsArray = explode(',', $metaMatchTerms);
-        // put '' around each value
-        $quotedTermsArray = array_map(function ($metaMatchTerms) {
-            return "'" . $metaMatchTerms . "'";
-        }, $metaMatchTermsArray);
-
-        // create string , seperated
-        $formattedTermString = implode(',', $quotedTermsArray);
-
-        /*
-        $query = " AND JSON_EXTRACT(productMeta, '$." . $metaKey . "') IN ($formattedTermString) ";
-        $static = " AND JSON_EXTRACT(productMeta, '$.\"METRIC WEIGHT\"') IN ($formattedTermString) ";  
-        */
-        $jsonPath = '$."'.$metaKey.'"';
-        $query = " AND JSON_UNQUOTE(JSON_EXTRACT(productMeta, '$jsonPath')) IN ($formattedTermString) ";
-        return $query;
-
-    }
 
 
-    public function getCachedFilters($source) {
 
-        
+    public function getCachedFilters($source)
+    {
+
+
         $cacheDir = ABSPATH . 'cache/';
         if (!is_dir($cacheDir)) {
             mkdir($cacheDir, 0777, true);
         }
 
         $filename = "filer-$source.json";
-        $cacheFile = $cacheDir.$filename;
+        $cacheFile = $cacheDir . $filename;
 
-        if (file_exists($cacheFile) ) {
+        if (file_exists($cacheFile)) {
             // Load from cache file
             $filterData = json_decode(file_get_contents($cacheFile), true);
-        }
-
-        else {
+        } else {
             $filterData = [];
         }
 
 
         return $filterData;
-
-
     }
 
-    public function buildCachedFilder($source) {
-
+    public function buildCachedFilters($source)
+    {
 
         $cacheDir = ABSPATH . 'cache/';
         if (!is_dir($cacheDir)) {
@@ -317,17 +315,13 @@ class swatchesModule
         }
 
         $filename = "filer-$source.json";
-        $cacheFile = $cacheDir.$filename;
+        $cacheFile = $cacheDir . $filename;
 
-        
-        $filterData = $this->swatchModule->buildFilterDynamic($source);
-        if(file_put_contents($cacheFile, json_encode($filterData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)))
+
+        $filterData = $this->buildFilterDynamic($source);
+        if (file_put_contents($cacheFile, json_encode($filterData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)))
             echo "file created successfully";
-        
     }
-
-
-
 }
 
 

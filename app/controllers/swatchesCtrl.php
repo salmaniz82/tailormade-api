@@ -14,8 +14,7 @@
 
     public function index()
     {
-
-        echo "hello from tailormade hello method";
+        echo SITE_URL;
     }
 
 
@@ -61,19 +60,18 @@
     {
 
 
-    
         $paramsQuery['page'] = (isset($_GET['page']) && is_numeric($_GET['page'])) ? $_GET['page'] : 1;
-        $paramsQuery['limit'] = (isset($_GET['limit']) && is_numeric($_GET['limit'])) ? $_GET['limit'] : 20;
+        $paramsQuery['limit'] = (isset($_GET['limit']) && is_numeric($_GET['limit'])) ? $_GET['limit'] : 12;
         $paramsQuery['offset'] = ($paramsQuery['page'] - 1) * $paramsQuery['limit'];
         $paramsQuery['filteringActivate'] = (isset($_GET['filteringActivate']) && $_GET['filteringActivate'] != "") ? $_GET['filteringActivate'] : 'off';
         $paramsQuery['source'] = (isset($_GET['source']) && $_GET['source'] != "") ? $_GET['source'] : 'foxflannel.com';
 
-        if($paramsQuery['filteringActivate'] == 'on') :
-           $filteryParamKeys = $this->swatchModule->getSourceFilterStaticKeys($paramsQuery['source']);
-                 foreach($filteryParamKeys as $key => $filterParamKey) :
-                     if (isset($_GET[$filterParamKey]) && $_GET[$filterParamKey] != "") 
-                        $paramsQuery[$filterParamKey] = trim($_GET[$filterParamKey]);
-                endforeach;
+        if ($paramsQuery['filteringActivate'] == 'on') :
+            $filteryParamKeys = $this->swatchModule->getSourceFilterStaticKeys($paramsQuery['source']);
+            foreach ($filteryParamKeys as $key => $filterParamKey) :
+                if (isset($_GET[$filterParamKey]) && $_GET[$filterParamKey] != "")
+                    $paramsQuery[$filterParamKey] = trim($_GET[$filterParamKey]);
+            endforeach;
         endif;
 
 
@@ -94,13 +92,12 @@
         $data['filters'] = $this->swatchModule->buildFilterDynamic($paramsQuery['source']);
         */
         $data['filters'] = $this->swatchModule->getCachedFilters($paramsQuery['source']);
-        
-        return View::responseJson($data, 200);
 
+        return View::responseJson($data, 200);
     }
 
 
-   
+
 
 
 
@@ -278,46 +275,7 @@
     public function testBuildFilter()
     {
 
-        /*
-
-        { name: "foxflannel", url: "foxflannel.com", active: false },
-        { name: "loropiana", url: "loropiana.com", active: false },
-        { name: "dugdalebros", url: "shop.dugdalebros.com", active: false },
-        { name: "harrisons", url: "harrisons1863.com", active: false },
-
-        */
-
         $source = 'harrisons1863.com';
-
-        $cacheDir = ABSPATH . 'cache/';
-        if (!is_dir($cacheDir)) {
-            mkdir($cacheDir, 0777, true);
-        }
-
-        $filename = "filer-$source.json";
-        $cacheFile = $cacheDir.$filename;
-
-        if (file_exists($cacheFile) ) {
-            // Load from cache file
-            $filterData = json_decode(file_get_contents($cacheFile), true);
-        }
-
-        else {
-            $filterData = [];
-        }
-
-
-        /*
-        $filterData = $this->swatchModule->buildFilterDynamic($source);
-        if(file_put_contents($cacheFile, json_encode($filterData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)))
-            echo "file created successfully";
-        */
-
-
-
-
-        var_dump($filterData);
-
-
+        $this->swatchModule->buildCachedFilters($source);
     }
 }
