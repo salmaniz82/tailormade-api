@@ -4,7 +4,6 @@ namespace App;
 
 use \Framework\Route;
 
-
 $route = new Route();
 $route->get('/', 'swatchesCtrl@index');
 $route->get('/swatches?', 'swatchesCtrl@listSwatches');
