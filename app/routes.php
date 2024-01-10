@@ -10,15 +10,11 @@ $route->post('/swatch', 'swatchesCtrl@store');
 
 $route->post('/request-swatch', 'swatchesCtrl@processRequestSwatches');
 
-
 $route->get('/testmail', 'swatchesCtrl@testEmail');
-
 
 $route->get('/template', 'swatchesCtrl@loadSwatchTemplate');
 
-
 $route->get('/filters', 'swatchesCtrl@testBuildFilter');
-
 
 $route->otherwise(function () {
 
