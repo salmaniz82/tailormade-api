@@ -1,10 +1,14 @@
-<?php class ImageTransformer
+<?php
+
+namespace Framework;
+
+class ImageTransformer
 {
 
-	public $imageType;
-	public $filePath;
-	public $imageSourceInfo = array();
-	public $typeInDigit;
+    public $imageType;
+    public $filePath;
+    public $imageSourceInfo = array();
+    public $typeInDigit;
     public $width_org;
     public $height_org;
     public $image_type;
@@ -18,12 +22,12 @@
     public $imageBuild;
 
 
-	public function __construct()
-	{
+    public function __construct()
+    {
         // initialize the class;
-	}
+    }
 
-	public function refinePath($path)
+    public function refinePath($path)
     {
         $path = str_replace('\\', '/', $path);
         $path = preg_replace('/\/+/', '/', $path);
@@ -32,14 +36,14 @@
     }
 
 
-	public function showAbsPath()
+    public function showAbsPath()
     {
         echo ABSPATH;
     }
 
     public function loadImage($filePath)
     {
-        $path = ABSPATH."{$filePath}";
+        $path = ABSPATH . "{$filePath}";
         $path = $this->refinePath($path);
         $this->filePath = $path;
         return $this->isFileValid($path);
@@ -47,15 +51,12 @@
 
     public function isFileValid($path)
     {
-        if(!file_exists($this->filePath))
-        {
+        if (!file_exists($this->filePath)) {
             return false;
-        }
-        else {
+        } else {
             $this->prepareImgInfo();
             return true;
         }
-
     }
 
     public function prepareImgInfo()
@@ -68,17 +69,15 @@
         $this->bits_org = $this->imageSourceInfo['bits'];
         $this->aspectRatio_W_org = $this->width_org / $this->height_org;
         $this->aspectRatio_H_org = $this->height_org / $this->width_org;
-
     }
 
 
-    public function prepareDimension($newWidthRequested, $newHeightRequested, $outputQuality= null)
+    public function prepareDimension($newWidthRequested, $newHeightRequested, $outputQuality = null)
     {
 
         $error = 0;
 
-        if($newHeightRequested != 'auto' && $newWidthRequested != 'auto')
-        {
+        if ($newHeightRequested != 'auto' && $newWidthRequested != 'auto') {
 
 
             $newWidth = (int) $newWidthRequested;
@@ -87,11 +86,7 @@
             $this->newWidth = $newWidth;
             $this->newHeight = $newHeight;
             $this->newImageDimensions = imagecreatetruecolor($newWidth, $newHeight);
-
-
-        }
-        else if($newHeightRequested == 'auto' && $newWidthRequested != 'auto')
-        {
+        } else if ($newHeightRequested == 'auto' && $newWidthRequested != 'auto') {
             // auto height
 
             $newWidth = (int) $newWidthRequested;
@@ -99,9 +94,7 @@
             $this->newWidth = $newWidth;
             $this->newHeight = $newHeight;
             $this->newImageDimensions = imagecreatetruecolor($newWidth, $newHeight);
-        }
-        else if ($newHeightRequested != 'auto' && $newWidthRequested == 'auto')
-        {
+        } else if ($newHeightRequested != 'auto' && $newWidthRequested == 'auto') {
             // auto width
 
             $newHeight = (int) $newHeightRequested;
@@ -109,25 +102,17 @@
             $this->newWidth = $newWidth;
             $this->newHeight = $newHeight;
             $this->newImageDimensions = imagecreatetruecolor($newWidth, $newHeight);
-        }
-        else {
+        } else {
 
-            $error +=1;
-
+            $error += 1;
         }
 
-        if($error == 0)
-        {
+        if ($error == 0) {
             $this->imagePrep();
             $this->resampleImage();
-        }
-        else {
+        } else {
             return false;
-
         }
-
-
-
     }
 
     public function imagePrep()
@@ -135,46 +120,29 @@
         $image_type = $this->image_type;
         $typeDigit = $this->typeInDigit;
 
-        if($image_type == 'image/png' || strpos($image_type, 'png') ||  $typeDigit == 3)
-        {
+        if ($image_type == 'image/png' || strpos($image_type, 'png') ||  $typeDigit == 3) {
             $this->imageBuild =  imagecreatefrompng($this->filePath);
-        }
-
-        else if ($image_type == 'image/jpeg' || strpos($image_type, 'jpg') || $typeDigit == 2 )
-        {
+        } else if ($image_type == 'image/jpeg' || strpos($image_type, 'jpg') || $typeDigit == 2) {
             $this->imageBuild =  imagecreatefromjpeg($this->filePath);
-        }
-
-        else if ( strpos($image_type, 'bmp') || $typeDigit == 6 )
-        {
+        } else if (strpos($image_type, 'bmp') || $typeDigit == 6) {
             $this->imageBuild =  imagecreatefrombmp($this->filePath);
-        }
-
-        else if ( $image_type == "image/gif" || strpos($image_type, 'gif') || $typeDigit == 1 )
-        {
+        } else if ($image_type == "image/gif" || strpos($image_type, 'gif') || $typeDigit == 1) {
             $this->imageBuild =  imagecreatefromgif($this->filePath);
-        }
-        else if ( $image_type == "image/webp" || strpos($image_type, 'webp') || $typeDigit == 5 )
-        {
+        } else if ($image_type == "image/webp" || strpos($image_type, 'webp') || $typeDigit == 5) {
             $this->imageBuild =  imagecreatefromwebp($this->filePath);
-        }
-
-        else {
+        } else {
 
             return false;
-
         }
-
     }
 
     public function resampleImage()
     {
 
         imagecopyresampled($this->newImageDimensions, $this->imageBuild, 0, 0, 0, 0, $this->newWidth, $this->newHeight, $this->width_org, $this->height_org);
-
     }
 
-	public function reproduceSaveImage(array $args=null)
+    public function reproduceSaveImage(array $args = null)
     {
         // prepare default values
         $quality = (int) (isset($args['quality'])) ? $args['quality'] : 100;
@@ -189,26 +157,24 @@
 
 
 
-        $filename = $baseDirectory.'/thumbnails/'.$filename;
+        $filename = $baseDirectory . '/thumbnails/' . $filename;
 
-        switch($this->typeInDigit)
-        {
+        switch ($this->typeInDigit) {
             case 1:
                 return imagegif($this->newImageDimensions, $filename, $quality);
                 break;
             case 2:
                 return imagejpeg($this->newImageDimensions, $filename, $quality);
                 break;
-            case 3:               
-                    $pngQuality = ($quality - 100) / 11.111111;
-                    $pngQuality = round(abs($pngQuality));
-                 return imagepng($this->newImageDimensions, $filename, $pngQuality);
-                 break;
+            case 3:
+                $pngQuality = ($quality - 100) / 11.111111;
+                $pngQuality = round(abs($pngQuality));
+                return imagepng($this->newImageDimensions, $filename, $pngQuality);
+                break;
             case 18:
 
                 return imagewebp($this->newImageDimensions, $filename, $quality);
                 break;
         }
-	}
-
+    }
 }

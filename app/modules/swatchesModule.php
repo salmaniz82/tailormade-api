@@ -1,4 +1,9 @@
 <?php
+
+namespace App\Modules;
+
+use \Framework\Database;
+
 class swatchesModule
 {
 

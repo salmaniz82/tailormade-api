@@ -1,4 +1,10 @@
-<?php class swatchesCtrl extends appCtrl
+<?php
+
+namespace App\Controllers;
+
+use \Framework\View;
+
+class swatchesCtrl
 {
 
 
@@ -8,7 +14,7 @@
     public function __construct()
     {
 
-        $this->swatchModule = $this->load('module', 'swatches');
+        $this->swatchModule = new \App\Modules\swatchesModule();
     }
 
 
@@ -133,7 +139,7 @@
             $mail->Body = $bodyMessage;
             $mail->send();
             return View::responseJson(["message" => "Swatch request sent successfully"], 200);
-        } catch (Exception $error) {
+        } catch (\Exception $error) {
 
             return View::responseJson(["message" => "Error sending request please try again or later"], 500);
         }
@@ -191,7 +197,7 @@
         ];
 
         try {
-            $emailModule = $this->load('module', 'email');
+            $emailModule = new \App\Modules\emailModule();
             $mail = $emailModule->getConfigMailer();
             $mail->Subject = "Testing local for tailormade";
             $mail->FromName = 'iSkillmetrics';
@@ -211,7 +217,7 @@
             $mail->Body = $bodyMessage;
             $mail->send();
             echo "sent";
-        } catch (Exception $error) {
+        } catch (\Exception $error) {
             echo var_dump($error);
         }
     }
@@ -274,7 +280,6 @@
 
     public function testBuildFilter()
     {
-
         $source = 'harrisons1863.com';
         $this->swatchModule->buildCachedFilters($source);
     }

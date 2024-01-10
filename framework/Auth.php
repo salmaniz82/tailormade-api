@@ -1,5 +1,7 @@
 <?php
 
+namespace Framework;
+
 class Auth
 {
 
@@ -14,15 +16,12 @@ class Auth
 
     public static function loginStatus()
     {
-        
-        if( isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn'] === true ) 
-        {
-            return true;    
-        }
-        else 
-        {
+
+        if (isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn'] === true) {
+            return true;
+        } else {
             return false;
-        }      
+        }
     }
 
     public static function setLogin()
@@ -32,8 +31,7 @@ class Auth
 
     public static function User()
     {
-        if(isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn'] === true )
-        {
+        if (isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn'] === true) {
             //$this->id = $_SESSION['user']['id'];
             return $_SESSION['user'];
         }
@@ -41,8 +39,7 @@ class Auth
 
     public static function check()
     {
-        if (self::$_instance === null) 
-        {
+        if (self::$_instance === null) {
             self::$_instance = new self;
         }
 
@@ -59,7 +56,7 @@ class Auth
 
     public static function attemptLogin($creds)
     {
-        
+
         $db = new Database();
         $db->table = 'users';
         $email = mysqli_real_escape_string($db->connection, $creds['email']);
@@ -69,15 +66,14 @@ class Auth
         i need to check the user via email and get this in variable
         */
 
-        $user = $db->build('S')->Colums()->Where("email = '".$email."'")->go()->returnData();
+        $user = $db->build('S')->Colums()->Where("email = '" . $email . "'")->go()->returnData();
 
-        if($user != NULL)
-        {
+        if ($user != NULL) {
 
             $storedPassword = $user[0]['password'];
 
-            if(password_verify($password, $storedPassword)) {
-            
+            if (password_verify($password, $storedPassword)) {
+
                 unset($user['password']);
 
                 $_SESSION['isLoggedIn'] = true;
@@ -85,22 +81,12 @@ class Auth
                 $_SESSION['user'] = $user[0];
                 self::$user = $_SESSION['user'];
                 return $user;
-
-            } 
-            else {
+            } else {
                 return false;
             }
-
-
         } else {
 
             return false;
-
         }
-
-
-       
-        
     }
-
 }

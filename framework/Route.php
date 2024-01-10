@@ -1,4 +1,8 @@
-<?php class Route
+<?php
+
+namespace Framework;
+
+class Route
 {
     public $req_uri; /* incomming server uri in arrays */
     public $registered = array();
@@ -268,73 +272,52 @@
         $this->registered[] = $appUri;
 
 
-
         if ($appUri == $this->uriSegment($appUri)) {
 
 
             if (is_callable($callback)) {
-
-
                 //return $callback();
-
                 $callback();
                 die();
-
                 return $this;
             }
 
             if (is_array($callback)) {
 
-                $filepathCtrl = 'app/controllers/' . $callback[0] . 'Ctrl' . '.php';
-
-                if (file_exists($filepathCtrl)) {
-                    require_once $filepathCtrl;
-                    if (class_exists($callback[0] . 'Ctrl')) {
-                        if (method_exists($callback[0] . 'Ctrl', $callback[1]) && isset($callback[1])) {
-                            // find controller and class ready for dynamic instansiation
-                            $ctrlClassname = $callback[0] . 'Ctrl';
-                            $controller = new $ctrlClassname();
-                            $controller->$callback[1]();
-                            die();
-                            return $this;
-                        } else {
-                            echo 'Controller method doest not exist!';
-                        }
-                    } else {
-                        echo 'Controller Class undefined!';
-                    }
-                } else {
-                    echo 'Cannot Find associated Controller File';
-                }
+                echo "Refactor to PSR-4 : pending";
             }
 
             if (is_string($callback) == 'string') {
 
 
                 $callback = explode('@', $callback);
-                $filepathCtrl = 'app/controllers/' . $callback[0] . '.php';
 
-                /*
-                REFACTOR CODE USING PSR-4
-                $callback = explode('@', $callback);
                 $controllerClass = 'App\\Controllers\\' . $callback[0];
-                */
-                if (file_exists($filepathCtrl)) {
-                    require_once $filepathCtrl;
-                    if (method_exists($callback[0], $callback[1])) {
-                        // find controller and class ready for dynamic instansiation
-                        $ctrlClassname = $callback[0];
-                        $controller = new $ctrlClassname();
-                        $method = $callback[1];
-                        $controller->$method();
+
+
+                if (class_exists($controllerClass)) :
+
+                    $controller = new $controllerClass();
+                    $controllerMethod = $callback[1];
+
+                    if (method_exists($controller, $controllerMethod)) :
+
+                        return $controller->$controllerMethod();
                         die();
-                        return $this;
-                    } else {
-                        echo 'canot find method' . $filepathCtrl;
-                    }
-                } else {
-                    echo 'file is not there';
-                }
+
+                    else :
+
+                        echo "Method don't Exists";
+
+                    endif;
+
+                else :
+
+                    echo "Controller Not found";
+
+
+
+                endif;
             }
         }
     }

@@ -1,22 +1,21 @@
-<?php 
+<?php
 
-class Event 
+namespace Framework;
+
+class Event
 {
 	private static $events = array();
 
-	
+
 	public static function on($type, $callback)
 	{
 
-		if(!array_key_exists($type, self::$events) )
-		{
-			
-			self::$events[$type] = array();
+		if (!array_key_exists($type, self::$events)) {
 
+			self::$events[$type] = array();
 		}
-		
+
 		array_push(self::$events[$type], $callback);
-		
 	}
 
 
@@ -24,22 +23,15 @@ class Event
 	{
 
 
-		if(array_key_exists($type, self::$events) )
-		{
-			
-			foreach (self::$events[$type] as $callback) 
-			{
+		if (array_key_exists($type, self::$events)) {
+
+			foreach (self::$events[$type] as $callback) {
 
 				$callback();
-
-			}	
-
-		}
-
-		else {
+			}
+		} else {
 			echo "<span style=\"color: red\"> Unrecognized Event : " . $type . "</span> <br >";
 		}
-
 	}
 
 
@@ -47,10 +39,4 @@ class Event
 	{
 		echo self::$message;
 	}
-
 }
-
-
-
-
-
