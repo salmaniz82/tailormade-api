@@ -2,8 +2,8 @@
     "name": "dell/composer-playground",
     "autoload" : {
         "psr-4": {
-            "App\\" : "app/",
-            "Framework\\" : "framework/"
+            "App\\" : "App/",
+            "Framework\\" : "Framework/"
         }
     },
     "authors": [

@@ -1,4 +1,4 @@
-RewriteEngine On
+RewriteEngine On 
 Options -Indexes
 
 <IfModule mod_rewrite.c>
@@ -9,5 +9,6 @@ Options -Indexes
     RewriteRule . /index.php [L]
 </IfModule>
 
-
-
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json
+</IfModule>

@@ -7,5 +7,11 @@ if (!defined('ABSPATH'))
 	define('ABSPATH', dirname(__FILE__) . '/');
 
 
+$bootstrapFilePath = ABSPATH . 'bootstrap.php';
 
-require_once(ABSPATH . 'bootstrap.php');
+if (file_exists($bootstrapFilePath)) {
+
+	require_once($bootstrapFilePath);
+} else {
+	echo $bootstrapFilePath . 'DOES NOT EXISTS';
+}
