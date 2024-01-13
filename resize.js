@@ -1,6 +1,5 @@
 /*
 npm install sharp imagemin imagemin-pngquant imagemin-mozjpeg
-
 */
 
 import fs from "fs";
@@ -13,8 +12,8 @@ import imageminMozjpeg from "imagemin-mozjpeg";
 // Get the current module's directory
 const currentModuleDir = "D:/wamp/www/tailormade/uploads/images";
 
-const inputDirectory = "D:/wamp/www/tailormade/uploads/images/lp";
-const outputDirectory = "D:/wamp/www/tailormade/uploads/images/lp/thumbnails";
+const inputDirectory = "D:/wamp/www/tailormade/uploads/images/fxf";
+const outputDirectory = "D:/wamp/www/tailormade/uploads/images/fxf/modal";
 
 // Ensure the output directory exists
 if (!fs.existsSync(outputDirectory)) {
@@ -28,7 +27,7 @@ fs.readdirSync(inputDirectory).forEach((file) => {
 
   // Resize the image using sharp
   sharp(inputPath)
-    .resize({ width: 300 }) // Set the desired width
+    .resize({ width: 1024 }) // Set the desired width
     .toFile(outputPath, (err, info) => {
       if (err) {
         console.error(`Error resizing ${file}:`, err);
@@ -42,9 +41,25 @@ fs.readdirSync(inputDirectory).forEach((file) => {
 imagemin([`${outputDirectory}/*.{jpg,png}`], {
   destination: outputDirectory,
   plugins: [
-    imageminMozjpeg({ quality: 80 }), // Adjust quality as needed
-    imageminPngquant({ quality: [0.6, 0.8] }), // Adjust quality as needed
+    imageminMozjpeg({ quality: 100 }), // Adjust quality as needed
+    imageminPngquant({ quality: [1, 1] }), // Adjust quality as needed
   ],
 }).then(() => {
   console.log("Optimization complete");
 });
+
+/*
+resize and compresss using sharp
+---------------------------------
+sharp(inputPath)
+  .resize({ width: 1024 }) // Resize
+  .jpeg({ quality: 80 }) // Compress JPEG (adjust quality as needed)
+  .png({ quality: 90 }) // Compress PNG (adjust quality as needed)
+  .toFile(outputPath)
+  .then((info) => {
+    console.log(`Resized and compressed ${file} to ${info.width}x${info.height}`);
+  })
+  .catch((err) => {
+    console.error(`Error processing ${file}:`, err);
+  });
+*/
