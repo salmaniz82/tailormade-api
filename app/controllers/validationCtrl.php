@@ -2,7 +2,9 @@
 
 namespace App\Controllers;
 
-class validationCtrl extends appCtrl
+if (!defined('ABSPATH')) die('Direct Access File is not allowed');
+
+class validationCtrl extends BaseController
 {
 	public function show()
 	{

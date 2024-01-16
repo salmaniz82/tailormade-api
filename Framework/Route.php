@@ -19,8 +19,10 @@ class Route
     {
 
         $this->enableCORS();
+        /*
         $this->enableSSEheader();
         $this->enableCache();
+        */
         $this->serverRawURI = $_SERVER['REQUEST_URI'];
         $uri = explode('/', $this->serverRawURI);
         $uri[0] = '/';
@@ -52,9 +54,12 @@ class Route
 
             /*AMP specific*/
 
+           
+            /*
             header("AMP-Access-Control-Allow-Source-Origin: {$_SERVER['HTTP_ORIGIN']}");
             header("Access-Control-Expose-Headers: AMP-Access-Control-Allow-Source-Origin");
             header("Access-Control-Expose-Headers: AMP-Redirect-To, AMP-Access-Control-Allow-Source-Origin");
+            */
         } else {
             header("Access-Control-Allow-Origin: *");
         }

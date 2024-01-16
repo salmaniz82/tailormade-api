@@ -2,6 +2,8 @@
 
 namespace App\Modules;
 
+if (!defined('ABSPATH')) die('Direct Access File is not allowed');
+
 use \Framework\Database;
 
 class swatchesModule
@@ -92,12 +94,26 @@ class swatchesModule
         }
 
         $query = "SELECT SQL_CALC_FOUND_ROWS id, title, imageUrl, thumbnail, productPrice, productMeta, 
-                    source, status from swatches WHERE status = 1 ";
+                    source, status from swatches ";
 
         if (isset($source)) {
             $string = " source = '{$source}'";
             $query .= $this->appendQuery($query, $string);
         }
+
+        if(isset($status) && $status == 'all') {
+            $string =  " status IN (0, 1) ";
+            $query .= $this->appendQuery($query, $string);
+        }
+        
+        
+        else {
+            $string =  " status = 1 ";
+            $query .= $this->appendQuery($query, $string);
+        }
+                
+
+        
 
 
         if ($filteringActivate == 'on') :

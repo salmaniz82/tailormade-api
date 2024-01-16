@@ -2,6 +2,8 @@
 
 namespace App\Modules;
 
+if (!defined('ABSPATH')) die('Direct Access File is not allowed');
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;

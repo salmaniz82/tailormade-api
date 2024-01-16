@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+if (!defined('ABSPATH')) die('Direct Access File is not allowed');
+
 use \Framework\View;
 
 class swatchesCtrl
@@ -71,6 +73,7 @@ class swatchesCtrl
         $paramsQuery['offset'] = ($paramsQuery['page'] - 1) * $paramsQuery['limit'];
         $paramsQuery['filteringActivate'] = (isset($_GET['filteringActivate']) && $_GET['filteringActivate'] != "") ? $_GET['filteringActivate'] : 'off';
         $paramsQuery['source'] = (isset($_GET['source']) && $_GET['source'] != "") ? $_GET['source'] : 'foxflannel.com';
+        $paramsQuery['status'] = isset($_GET['status']) ?: '1';
 
         if ($paramsQuery['filteringActivate'] == 'on') :
             $filteryParamKeys = $this->swatchModule->getSourceFilterStaticKeys($paramsQuery['source']);
@@ -131,7 +134,7 @@ class swatchesCtrl
 
 
         try {
-            $emailModule = $this->load('module', 'email');
+            $emailModule = new \App\Modules\emailModule();
             $mail = $emailModule->getConfigMailer();
             $mail->Subject = "Testing local for tailormade : React Swatches";
             $mail->FromName = 'Tailormde shopify';

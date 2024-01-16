@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+if (!defined('ABSPATH')) die('Direct Access File is not allowed');
+
 
 class emailCtrl extends BaseController
 {

@@ -6,7 +6,50 @@ use \Framework\Route;
 
 $route = new Route();
 $route->get('/', 'swatchesCtrl@index');
+
 $route->get('/swatches?', 'swatchesCtrl@listSwatches');
+
+$route->get('/dashboard/{param}', 'dashboardCtrl@dasboardLanding');
+
+$route->get('/dashboard?', 'dashboardCtrl@dasboardLanding');
+
+/*make sure this is not running twice*/
+
+$route->get('/logout', 'userCtrl@logout');
+
+
+$route->get('/login', function() {
+
+	echo "your login procedure here...";
+
+});
+
+
+
+$route->get('/mock', function() {
+
+	$mockType = false;
+
+	if($mockType) {
+
+		$data["message"] = "this is for the success";
+		$statusCode = 200;
+	}
+	else {
+
+		$data["message"] = "Backend error message";
+		$statusCode = 406;
+
+	}
+	
+
+
+	return \Framework\View::responseJson($data, $statusCode);
+
+
+});
+
+
 
 /*
 DISABLED ROUTES
