@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { API_BASE_URL } from "../utils/helpers";
 import Select from "react-select";
-import { SlClose } from "react-icons/sl";
 
 function MyForm() {
   const [getMetaData, setMetaData] = useState([]);
@@ -9,6 +8,7 @@ function MyForm() {
   const [formData, setFormData] = useState([]);
   const [newKey, setNewKey] = useState("");
   const [newValue, setNewValue] = useState("");
+  const [showAddFields, setShowAddFields] = useState(false);
 
   const fetchMetaData = async () => {
     try {
@@ -109,17 +109,23 @@ function MyForm() {
               <div key={field.key}>
                 <label>{field.key}:</label>
                 <input type="text" placeholder={field.key} value={field.value} onChange={(e) => handleInputChange(index, e.target.value)} />
-
-                <SlClose className="delete-icon" onClick={() => handleRemoveField(index)} />
+                <button type="button" onClick={() => handleRemoveField(index)}>
+                  Remove
+                </button>
               </div>
             ))}
-            <div>
-              <input type="text" placeholder="Key" value={newKey} onChange={(e) => setNewKey(e.target.value)} />
-              <input type="text" placeholder="Value" value={newValue} onChange={(e) => setNewValue(e.target.value)} />
-              <button type="button" onClick={handleAddField}>
-                Add
-              </button>
-            </div>
+            {showAddFields && (
+              <div>
+                <input type="text" placeholder="Key" value={newKey} onChange={(e) => setNewKey(e.target.value)} />
+                <input type="text" placeholder="Value" value={newValue} onChange={(e) => setNewValue(e.target.value)} />
+                <button type="button" onClick={handleAddField}>
+                  Add
+                </button>
+              </div>
+            )}
+            <button type="button" onClick={() => setShowAddFields(!showAddFields)}>
+              {showAddFields ? "Hide Add Fields" : "Show Add Fields"}
+            </button>
           </div>
         )}
       </div>
