@@ -14,6 +14,11 @@ export default function Sidebar() {
         </li>
 
         <li>
+          <span className="material-icons-outlined">playlist_add</span>
+          <Link to="/addswatch">Add swatch</Link>
+        </li>
+
+        <li>
           <span className="material-icons-outlined">memory</span>
           <Link to="/demo">Demo</Link>
         </li>

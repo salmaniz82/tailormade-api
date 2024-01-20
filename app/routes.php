@@ -9,11 +9,20 @@ $route->get('/', 'swatchesCtrl@index');
 
 $route->get('/swatches?', 'swatchesCtrl@listSwatches');
 
+
+$route->post('/swatches', 'swatchesCtrl@store');
+
+
+$route->put('/swatches/{id}', 'swatchesCtrl@update');
+
+
+
+
 $route->get('/dashboard/{param}', 'dashboardCtrl@dasboardLanding');
 
 $route->get('/dashboard?', 'dashboardCtrl@dasboardLanding');
 
-/*make sure this is not running twice*/
+/*make sure this is not running twice*/	
 
 $route->get('/logout', 'userCtrl@logout');
 

@@ -6,6 +6,7 @@ if (!defined('ABSPATH')) die('Direct Access File is not allowed');
 
 use \Framework\View;
 
+
 class swatchesCtrl
 {
 
@@ -23,6 +24,52 @@ class swatchesCtrl
     public function index()
     {
         echo SITE_URL;
+    }
+
+    public function handleStatusToggle($id, $status) {
+
+        $data["message"] = "working on status toggle";
+        $dataPayload["status"] = $status;
+        if($this->swatchModule->update($dataPayload, $id)) {
+           $data["message"] = "Status updated ";
+           $data["operation-status"] = 'ok';
+           $statusCode = 200;
+        }
+        else {
+
+            $data["message"] = "Error while updating status";
+            $data["operation-status"] = 'failed';
+            $statusCode = 500;
+
+        }
+
+        return View::responseJson($data, 200);
+        die();
+
+    }
+
+
+
+    public function update()
+    {
+
+        $id = \Framework\Route::$params['id'];
+        $request = \Framework\Route::$_PUT;
+       
+
+        if($request["operation"] == "status-toggle")
+            return $this->handleStatusToggle($id, $request["status"]);
+
+
+        /*
+        $data["message"] = "this message is caught by the server";
+        $data["POST"] = $_POST;
+        $data["PuT"] = $_PUT;
+        $statusCode = 200;
+        return View::responseJson($data, $statusCode);
+        $this->swatchModule->update($dataPayload, $id);
+        */
+
     }
 
 
@@ -103,6 +150,8 @@ class swatchesCtrl
         $data['filters'] = $this->swatchModule->getCachedFilters($paramsQuery['source']);
 
         return View::responseJson($data, 200);
+
+        die();
     }
 
 

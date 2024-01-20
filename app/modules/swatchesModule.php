@@ -19,6 +19,19 @@ class swatchesModule
         $this->DB->table = 'swatches';
     }
 
+
+    public function update($payload, $id) {
+
+        if($this->DB->update($payload, $id)){
+
+            return true;
+
+        }
+
+        return false;
+
+    }
+
     public function appendQuery($query, $string)
     {
 
