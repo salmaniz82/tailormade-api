@@ -26,6 +26,24 @@ class swatchesCtrl
         echo SITE_URL;
     }
 
+    public function swatchMeta() {
+
+        if($data["metadata"] = $this->swatchModule->getSwatchMeta() ){
+            $data["message"] = "Success";        
+            return View::responseJson($data, 200);
+            die();
+        }
+
+        
+
+        $data["message"] = "Failed while fetching swatch meta data";
+        return View::responseJson($data, 500);
+        die();
+
+    }
+
+
+
     public function handleStatusToggle($id, $status) {
 
         $data["message"] = "working on status toggle";

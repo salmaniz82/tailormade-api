@@ -1,3 +1,5 @@
+import MyForm from "./MyForm";
+
 export default function AddSwatch() {
   return (
     <>
@@ -23,19 +25,7 @@ export default function AddSwatch() {
         </div>
 
         <div className="bg-white">
-          <form action="">
-            <div>
-              <select name="stock-source" id="stock-source">
-                <option value="">apple</option>
-                <option value="">orange</option>
-                <option value="">mango</option>
-                <option value="">banana</option>
-              </select>
-            </div>
-            <div>
-              <input type="text" name="title" placeholder="add a title here" />
-            </div>
-          </form>
+          <MyForm />
         </div>
       </main>
     </>

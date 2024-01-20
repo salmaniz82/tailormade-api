@@ -7,7 +7,11 @@ use \Framework\Route;
 $route = new Route();
 $route->get('/', 'swatchesCtrl@index');
 
+$route->get('/swatchemeta', 'swatchesCtrl@swatchMeta');
+
 $route->get('/swatches?', 'swatchesCtrl@listSwatches');
+
+
 
 
 $route->post('/swatches', 'swatchesCtrl@store');
