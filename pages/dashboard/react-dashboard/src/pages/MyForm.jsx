@@ -9,6 +9,7 @@ function MyForm() {
   const [newKey, setNewKey] = useState("");
   const [newValue, setNewValue] = useState("");
   const [showAddFields, setShowAddFields] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const fetchMetaData = async () => {
     try {
@@ -61,11 +62,19 @@ function MyForm() {
     }
   };
 
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedImage(file);
+  };
+
   const handleSubmit = () => {
     // formData contains the key-value pairs for submission
     console.log(formData);
 
-    // Add logic to save to the database or perform other actions
+    // selectedImage contains the selected file
+    console.log(selectedImage);
+
+    // Add logic to send data to the server, including the file
   };
 
   const options = getMetaData.map((meta) => ({
@@ -128,6 +137,18 @@ function MyForm() {
             </button>
           </div>
         )}
+
+        <div className="fieldWrap">
+          <div className="Field">
+            <label htmlFor="image">Image:</label>
+            <input type="file" id="image" accept="image/*" onChange={handleImageChange} />
+          </div>
+          {selectedImage && (
+            <div>
+              <img src={URL.createObjectURL(selectedImage)} alt="Selected" />
+            </div>
+          )}
+        </div>
       </div>
 
       <button type="button" onClick={handleSubmit}>
