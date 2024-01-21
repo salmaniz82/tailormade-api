@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { API_BASE_URL } from "../utils/helpers";
 import Select from "react-select";
+import { SlClose, SlEye, SlList, SlNote, SlTrash, SlPlus } from "react-icons/sl";
 
 function MyForm() {
   const [getMetaData, setMetaData] = useState([]);
@@ -88,53 +89,36 @@ function MyForm() {
   }, []);
 
   return (
-    <form>
+    <form name="add-swatch-form" id="add-swatch-form">
       <div className="dfx">
-        <div className="fieldWrap">
-          <div className="Field">
-            <label htmlFor="title">Title:</label>
-            <input type="text" name="title" id="title" />
-          </div>
+        <div className="dfx metaauto-fields">
+          <label htmlFor="stock-select">STOCK COLLECTION</label>
+          <Select options={options} onChange={handleSelectChange} placeholder="Choose Stock Collection" id="stock-select" />
+          <div>&nbsp;</div>
         </div>
 
-        <div className="fieldWrap">
-          <div className="Field">
-            <label htmlFor="status">Status:</label>
-            <input type="checkbox" name="status" id="status" />
-          </div>
-        </div>
-      </div>
-
-      <div className="dfx">
-        <div className="fieldWrap">
-          <div className="Field">
-            <Select options={options} onChange={handleSelectChange} />
-          </div>
+        <div className="dfx metaauto-fields">
+          <label htmlFor="title">Title:</label>
+          <input type="text" name="title" id="title" placeholder="Title" />
+          <div>&nbsp;</div>
         </div>
 
         {selectedOption && (
           <div>
             {formData.map((field, index) => (
-              <div key={field.key}>
+              <div key={field.key} className="dfx metaauto-fields">
                 <label>{field.key}:</label>
                 <input type="text" placeholder={field.key} value={field.value} onChange={(e) => handleInputChange(index, e.target.value)} />
-                <button type="button" onClick={() => handleRemoveField(index)}>
-                  Remove
-                </button>
+                <SlClose className="delete-icon r-icons" onClick={() => handleRemoveField(index)} />
               </div>
             ))}
-            {showAddFields && (
-              <div>
-                <input type="text" placeholder="Key" value={newKey} onChange={(e) => setNewKey(e.target.value)} />
-                <input type="text" placeholder="Value" value={newValue} onChange={(e) => setNewValue(e.target.value)} />
-                <button type="button" onClick={handleAddField}>
-                  Add
-                </button>
-              </div>
-            )}
-            <button type="button" onClick={() => setShowAddFields(!showAddFields)}>
-              {showAddFields ? "Hide Add Fields" : "Show Add Fields"}
-            </button>
+
+            <div className="dfx metaauto-fields">
+              <input type="text" placeholder="Key" value={newKey} onChange={(e) => setNewKey(e.target.value)} />
+              <input type="text" placeholder="Value" value={newValue} onChange={(e) => setNewValue(e.target.value)} />
+
+              <SlPlus className="edit-icon r-icons" onClick={handleAddField} />
+            </div>
           </div>
         )}
 
@@ -148,6 +132,15 @@ function MyForm() {
               <img src={URL.createObjectURL(selectedImage)} alt="Selected" />
             </div>
           )}
+        </div>
+      </div>
+
+      <div className="dfx metaauto-fields">
+        <div className="fieldWrap">
+          <div className="Field">
+            <label htmlFor="status">Status:</label>
+            <input type="checkbox" name="status" id="status" />
+          </div>
         </div>
       </div>
 
