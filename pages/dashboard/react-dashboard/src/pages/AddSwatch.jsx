@@ -24,7 +24,7 @@ export default function AddSwatch() {
           </ul>
         </div>
 
-        <div className="bg-white">
+        <div className="">
           <MyForm />
         </div>
       </main>

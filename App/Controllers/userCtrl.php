@@ -9,15 +9,13 @@ use \Framework\Auth;
 class userCtrl extends BaseController
 {
 
-	public $layout;
+
 	public $userModule;
 
 
 	public function __construct()
 	{
 
-		$template = new \Framework\Template();
-		$this->layout = $template->layout('auth-tpl.php');
 		$this->userModule = new \App\Modules\usersModule();
 	}
 
@@ -34,21 +32,20 @@ class userCtrl extends BaseController
 	}
 
 
-
-
 	public function showLogin()
 	{
 
+		/*
 		if (Auth::loginStatus()) {
 			return $this->redirect('/dashboard');
 		}
-
-		$data['title'] = 'Login';
-		$this->layout->compile('login.php', $data);
-		return;
-		/*
-    	View::render('login', $data);
 		*/
+	
+		$data['title'] = 'LOGIN';
+		return \Framework\View::render('login.php', $data);
+		die();
+		
+		
 	}
 
 	public function doLogin()
@@ -74,21 +71,30 @@ class userCtrl extends BaseController
 					}
 
 					Auth::check()->id = Auth::User()['id'];
-					header('location: /dashboard/todos');
+					return header('location: /dashboard');
 				} else {
 					$_SESSION['flashMsg'] = 'Invalid Credentials';
 					$_SESSION['fClass'] = 'error';
-					header("location: /login");
+					return header("location: /login");
 				}
 			} else {
+				
 				$data['message'] = 'Invalid Email';
+				$_SESSION['flashMsg'] = 'Invalid Credentials';
+				$_SESSION['fClass'] = 'error';
+				return header("location: /login");
+
 			}
 		} else {
-			$data['message'] = 'creds not found';
+
+			$_SESSION['flashMsg'] = 'Invalid Credentials';
+			$_SESSION['fClass'] = 'error';
+			return header("location: /login");
+			
 		}
 
 
-		\Framework\View::render('page', $data);
+		
 	}
 
 	public function logout()

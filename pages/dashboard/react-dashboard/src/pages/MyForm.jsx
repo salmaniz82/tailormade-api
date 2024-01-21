@@ -92,14 +92,33 @@ function MyForm() {
     <form name="add-swatch-form" id="add-swatch-form">
       <div className="dfx">
         <div className="dfx metaauto-fields">
-          <label htmlFor="stock-select">STOCK COLLECTION</label>
-          <Select options={options} onChange={handleSelectChange} placeholder="Choose Stock Collection" id="stock-select" />
+          <label>Status:</label>
+          <div>
+            <label className="switch" htmlFor="status">
+              <input type="checkbox" className="user-check-toggle" id="status" value="1" />
+              <div className="slider round"></div>
+            </label>
+          </div>
           <div>&nbsp;</div>
+        </div>
+
+        <div className="dfx metaauto-fields">
+          <label htmlFor="image">Image:</label>
+
+          <div>
+            <input type="file" id="image" accept="image/*" onChange={handleImageChange} />
+          </div>
         </div>
 
         <div className="dfx metaauto-fields">
           <label htmlFor="title">Title:</label>
           <input type="text" name="title" id="title" placeholder="Title" />
+          <div>&nbsp;</div>
+        </div>
+
+        <div className="dfx metaauto-fields">
+          <label htmlFor="stock-select">STOCK COLLECTION</label>
+          <Select options={options} onChange={handleSelectChange} placeholder="Choose Stock Collection" id="stock-select" />
           <div>&nbsp;</div>
         </div>
 
@@ -116,37 +135,25 @@ function MyForm() {
             <div className="dfx metaauto-fields">
               <input type="text" placeholder="Key" value={newKey} onChange={(e) => setNewKey(e.target.value)} />
               <input type="text" placeholder="Value" value={newValue} onChange={(e) => setNewValue(e.target.value)} />
-
               <SlPlus className="edit-icon r-icons" onClick={handleAddField} />
             </div>
           </div>
         )}
-
-        <div className="fieldWrap">
-          <div className="Field">
-            <label htmlFor="image">Image:</label>
-            <input type="file" id="image" accept="image/*" onChange={handleImageChange} />
-          </div>
-          {selectedImage && (
-            <div>
-              <img src={URL.createObjectURL(selectedImage)} alt="Selected" />
-            </div>
-          )}
-        </div>
       </div>
 
-      <div className="dfx metaauto-fields">
-        <div className="fieldWrap">
-          <div className="Field">
-            <label htmlFor="status">Status:</label>
-            <input type="checkbox" name="status" id="status" />
+      <div className="ImagePreview">
+        {selectedImage && (
+          <div>
+            <img src={URL.createObjectURL(selectedImage)} alt="Selected" />
           </div>
-        </div>
+        )}
       </div>
 
-      <button type="button" onClick={handleSubmit}>
-        Submit
-      </button>
+      <div className="flashButtonWrapper mx-auto">
+        <div className="text_btn_lg" onClick={handleSubmit}>
+          SAVE
+        </div>
+      </div>
     </form>
   );
 }

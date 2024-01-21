@@ -19,11 +19,11 @@ class dashboardCtrl extends BaseController
     public function __construct()
     {
 
-        /*
+        
         if (!Auth::loginStatus()) {
             return header("Location: /login");
         }
-        */
+        
     }
 
 

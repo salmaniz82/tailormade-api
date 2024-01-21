@@ -31,11 +31,9 @@ $route->get('/dashboard?', 'dashboardCtrl@dasboardLanding');
 $route->get('/logout', 'userCtrl@logout');
 
 
-$route->get('/login', function() {
-
-	echo "your login procedure here...";
-
-});
+$route->get('/login', 'userCtrl@showLogin');
+$route->post('/login', 'userCtrl@doLogin');
+$route->get('/logout', 'userCtrl@logout');
 
 
 

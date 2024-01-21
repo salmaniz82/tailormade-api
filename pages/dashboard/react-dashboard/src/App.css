@@ -1542,3 +1542,64 @@ h5 {
 .css-13cymwt-control:hover {
   border-color: rgb(204, 204, 204);
 }
+
+.d-flex {
+  display: flex;
+}
+.flex-column {
+  flex-direction: column;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.max-w-2xl {
+  max-width: 800px;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.t-center {
+  text-align: center;
+}
+
+#login-form .fieldWrap {
+  margin-bottom: 10px;
+}
+
+#login-form input {
+  border: none;
+  box-shadow: none;
+  outline: none;
+  border-bottom: 1px solid rgb(204, 204, 204);
+}
+
+#login-form .metaauto-fields {
+  min-width: 400px;
+}
+
+#login-section {
+  margin-top: 200px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+#login-form {
+  margin-top: 50px;
+}
+
+#add-swatch-form .flashButtonWrapper {
+  max-width: 100px;
+}
+
+#add-swatch-form .text_btn_lg {
+  font-size: 16px;
+}
