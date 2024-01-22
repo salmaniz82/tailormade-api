@@ -30,12 +30,40 @@ export default function Swatches() {
     { name: "foxflannel", url: "foxflannel.com", active: true },
     { name: "loropiana", url: "loropiana.com", active: false },
     { name: "dugdalebros", url: "shop.dugdalebros.com", active: false },
-    { name: "harrisons", url: "harrisons1863.com", active: false },
+    { name: "harrisons", url: "harrisons1863.com", active: false }
   ]);
 
   const handlePaginate = (e, pageNo) => {
     e.preventDefault();
     setsSatches_request_url((existingUrl) => updateQueryStringParameter(existingUrl, "page", pageNo));
+  };
+
+  const handleDelete = (swatchId) => {
+    console.log("delete swatch with id of", swatchId);
+
+    fetch(`${API_BASE_URL}swatches/${swatchId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: []
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((error) => {
+            throw new Error(error.message || "Server error");
+          });
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setCollections((prevCollections) => prevCollections.filter((swatch) => swatch.id !== swatchId));
+
+        toast.success(data.message);
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
   };
 
   const handleSource = (e, source) => {
@@ -59,7 +87,7 @@ export default function Swatches() {
       const updatedSources = prevSources.map((item) => {
         return {
           ...item,
-          active: item.url === source,
+          active: item.url === source
         };
       });
       return updatedSources;
@@ -70,16 +98,16 @@ export default function Swatches() {
     (async () => {
       const requestPayload = {
         operation: "status-toggle",
-        status: !currentStatus,
+        status: !currentStatus
       };
 
       try {
         const response = await fetch(`${API_BASE_URL}swatches/${swatchId}`, {
           method: "PUT",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json"
           },
-          body: JSON.stringify(requestPayload),
+          body: JSON.stringify(requestPayload)
         });
 
         if (!response.ok) {
@@ -285,11 +313,9 @@ export default function Swatches() {
                               <div className="slider round"></div>
                             </label>
                           </th>
+                          <th>{false && <SlNote className="edit-icon" />} &nbsp;</th>
                           <th>
-                            <SlNote className="edit-icon" />
-                          </th>
-                          <th>
-                            <SlTrash className="delete-icon" />
+                            <SlTrash className="delete-icon" onClick={() => handleDelete(swatch.id)} />
                           </th>
                         </tr>
                       ))}

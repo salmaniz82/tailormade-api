@@ -1603,3 +1603,17 @@ h5 {
 #add-swatch-form .text_btn_lg {
   font-size: 16px;
 }
+
+.addingSwatch.ImagePreview {
+  max-width: 400px;
+}
+
+.addingSwatch.ImagePreview img {
+  max-width: 100%;
+}
+
+#add-swatch-form {
+  max-width: 800px;
+  padding: 20px;
+  margin-top: 50px;
+}

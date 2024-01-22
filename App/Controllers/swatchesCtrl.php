@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 if (!defined('ABSPATH')) die('Direct Access File is not allowed');
 
+use App\Modules\swatchesModule;
 use \Framework\View;
 
 
@@ -21,49 +22,214 @@ class swatchesCtrl
     }
 
 
+    public function test()
+    {
+
+
+
+
+
+        // get the alias using url i.e source
+        /*
+        if ($result = $this->swatchModule->pluckAliasviaSource("foxflannel.com")) {
+            var_dump($result);
+        }
+        */
+
+        /*
+        $swatch = $this->swatchModule->getSwatchByID(729);
+        var_dump($swatch);
+        $swatch['imageUrl'];
+        $swatch['thumbnail'];
+        */
+    }
+
+    public function unlinkSwatchImages($id)
+    {
+
+        if ($swatch = $this->swatchModule->getSwatchByID($id)) {
+
+            extract($swatch);
+
+            if (file_exists(ABSPATH . $imageUrl))
+                unlink(ABSPATH . $imageUrl);
+
+
+            if (file_exists(ABSPATH . $thumbnail))
+                unlink(ABSPATH . $thumbnail);
+        }
+    }
+
+    public function deleteSwatches()
+    {
+
+
+        $id = \Framework\Route::$params['id'];
+
+        $this->unlinkSwatchImages($id);
+
+        if ($this->swatchModule->delete($id)) {
+            $data["message"] = "Swatch Deleted!";
+            return View::responseJson($data, 200);
+        }
+
+        $data["message"] = "Error while deleteing swatch";
+        return View::responseJson($data, 200);
+    }
+
+
+
+
+
+    public function store()
+    {
+
+
+        $requiredFields = ['title', 'status', 'source', 'productMeta'];
+
+        foreach ($requiredFields as $key => $field) {
+
+            if (!isset($_POST[$field]) || empty($_POST[$field]) || $_POST[$field] == "" || $_POST[$field] == "undefined" || $_POST[$field] == 'false') {
+                $data["message"] = "Invalid value for " . $field;
+                $data["code"] = 406;
+                return View::responseJson($data, 200);
+                die();
+            }
+        }
+
+
+        if (sizeof($_FILES) == 0) :
+
+            $data["code"] = 406;
+            return View::responseJson(["message" => "Image not provided"], 200);
+
+            die();
+
+        endif;
+
+
+
+
+        if ($_FILES['file']['error'] === 0) {
+
+            $doCompression = false;
+            $fileSizeInMB = $_FILES['file']['size'] / (1024 * 1024);
+            $fileInfo = pathinfo($_FILES['file']['name']);
+            $fileBaseName = $fileInfo['filename'];
+            $fileExtension = $fileInfo['extension'];
+
+            $fileName = $_FILES['file']['name'];
+
+            $maxFileSizeInBytes = 600 * 1024; // 600KB in bytes
+
+            if ($_FILES['file']['size'] > $maxFileSizeInBytes) {
+                $doCompression = true;
+            }
+
+            if (!$alias = $this->swatchModule->pluckAliasviaSource($_POST['source'])) {
+                $data["message"] = " Not Valid Entry for stock Alias ";
+                $data["code"] = 500;
+                return View::responseJson($data, 200);
+                die();
+            }
+
+
+            $aliasRootDirectory =  "uploads/images/$alias/";
+            $aliasOriginalDirectory = "uploads/images/$alias/original/";
+            $aliasThumbnailDirectory = "uploads/images/$alias./thumbnail/";
+
+            $originalPath = $aliasOriginalDirectory . $fileName;
+
+            if (!is_dir($aliasRootDirectory))
+                mkdir($aliasRootDirectory, 0755, true);
+
+            if (!is_dir($aliasOriginalDirectory))
+                mkdir($aliasOriginalDirectory, 0755, true);
+
+
+            if (!is_dir($aliasThumbnailDirectory))
+                mkdir($aliasThumbnailDirectory, 0755, true);
+
+            $rootPath = $aliasRootDirectory . $fileName;
+            $thumbnailPath = $aliasThumbnailDirectory . $fileName;
+
+            if (move_uploaded_file($_FILES['file']['tmp_name'],  $rootPath)) {
+
+                $imageManager = new \Intervention\Image\ImageManager(new \Intervention\Image\Drivers\Gd\Driver);
+                $image = $imageManager->read($rootPath);
+                $image->scale(width: 300, height: 300);
+                $image->save($thumbnailPath);
+
+                $payload['title'] = mysqli_real_escape_string($this->swatchModule->DB->connection, trim($_POST["title"]));
+                $payload['source'] = mysqli_real_escape_string($this->swatchModule->DB->connection, trim($_POST["source"]));
+                $payload['status'] = mysqli_real_escape_string($this->swatchModule->DB->connection, trim($_POST["status"]));
+                $payload['productMeta'] = mysqli_real_escape_string($this->swatchModule->DB->connection, trim($_POST["productMeta"]));
+                $payload['imageUrl'] = "/" . $rootPath;
+                $payload['thumbnail'] = "/" . $thumbnailPath;
+                $payload['productPrice'] = "n/a";
+
+                if ($lastId = $this->swatchModule->addSwatch($payload)) {
+
+                    $data["message"] = "Swatch added ";
+                    $data["code"] = 200;
+                    return View::responseJson($data, 200);
+                } else {
+
+                    $data["message"] = "Error occured while adding new swatch ";
+                    $data["code"] = 500;
+                    return View::responseJson($data, 200);
+                }
+            }
+        } else {
+
+            $data["message"] = "Fouund error in uploaded image ";
+            $data["code"] = 406;
+            return View::responseJson($data, 200);
+        }
+    }
+
+
     public function index()
     {
         echo SITE_URL;
     }
 
-    public function swatchMeta() {
+    public function swatchMeta()
+    {
 
-        if($data["metadata"] = $this->swatchModule->getSwatchMeta() ){
-            $data["message"] = "Success";        
+        if ($data["metadata"] = $this->swatchModule->getSwatchMeta()) {
+            $data["message"] = "Success";
             return View::responseJson($data, 200);
             die();
         }
 
-        
+
 
         $data["message"] = "Failed while fetching swatch meta data";
         return View::responseJson($data, 500);
         die();
-
     }
 
 
 
-    public function handleStatusToggle($id, $status) {
+    public function handleStatusToggle($id, $status)
+    {
 
-        $data["message"] = "working on status toggle";
-        $dataPayload["status"] = $status;
-        if($this->swatchModule->update($dataPayload, $id)) {
-           $data["message"] = "Status updated ";
-           $data["operation-status"] = 'ok';
-           $statusCode = 200;
-        }
-        else {
+
+        $dataPayload["status"] = ($status) ?  1 : 0;
+        if ($this->swatchModule->update($dataPayload, $id)) {
+            $data["message"] = "Status updated ";
+            $data["operation-status"] = 'ok';
+            $statusCode = 200;
+        } else {
 
             $data["message"] = "Error while updating status";
             $data["operation-status"] = 'failed';
             $statusCode = 500;
-
         }
 
         return View::responseJson($data, 200);
         die();
-
     }
 
 
@@ -73,9 +239,9 @@ class swatchesCtrl
 
         $id = \Framework\Route::$params['id'];
         $request = \Framework\Route::$_PUT;
-       
 
-        if($request["operation"] == "status-toggle")
+
+        if ($request["operation"] == "status-toggle")
             return $this->handleStatusToggle($id, $request["status"]);
 
 
@@ -87,12 +253,13 @@ class swatchesCtrl
         return View::responseJson($data, $statusCode);
         $this->swatchModule->update($dataPayload, $id);
         */
-
     }
 
 
-    public function store()
+    public function batchStore()
     {
+
+        /* saving NodeJS */
 
         $key = array('title', 'productPrice', 'imageUrl', 'productMeta', 'source');
         $error = 0;
@@ -103,7 +270,6 @@ class swatchesCtrl
                 $error++;
             }
         }
-
 
         if ($error > 0) {
             $dataPayload['message'] = "Required fields are missing";

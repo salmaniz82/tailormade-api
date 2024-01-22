@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://tailormade.local/";
+const API_BASE_URL = "https://tailormade.webential.live/";
 
 function generateNumberArray(size) {
   return Array.from({ length: size }, (_, index) => index + 1);
@@ -59,18 +59,18 @@ function buildFiltersUrlQueryParams(url, filters) {
 const validateEmail = (email) => {
   return String(email)
     .toLowerCase()
-    .match(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    );
+    .match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 };
 
-export {
-  validateEmail,
-  generateNumberArray,
-  updateQueryStringParameter,
-  clearAllQueryParams,
-  API_BASE_URL,
-  buildFiltersUrlQueryParams,
-  getUrlParamValueByKey,
-  urlHaskey,
-};
+function convertArrayToObject(array) {
+  const result = array.reduce((acc, { key, value }) => {
+    if (key && value) {
+      acc[key.toUpperCase()] = value;
+    }
+    return acc;
+  }, {});
+
+  return Object.keys(result).length > 0 ? result : false;
+}
+
+export { validateEmail, generateNumberArray, updateQueryStringParameter, clearAllQueryParams, API_BASE_URL, buildFiltersUrlQueryParams, getUrlParamValueByKey, urlHaskey, convertArrayToObject };

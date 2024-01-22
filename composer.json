@@ -16,7 +16,8 @@
 
         "phpmailer/phpmailer": "^6.6",
         "wixel/gump": "^2.0",
-        "ext-gd": "*"
+        "ext-gd": "*",
+        "intervention/image": "^3.3"
 
     }
 }

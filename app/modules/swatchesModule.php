@@ -14,33 +14,67 @@ class swatchesModule
 
     public function __construct()
     {
-
         $this->DB = new Database();
         $this->DB->table = 'swatches';
     }
 
-    public function getSwatchMeta(){
 
-        $query = "SELECT id, title, url, alias, metaFields from stocks"; 
+
+
+    public function delete($id)
+    {
+
+        $query = "DELETE FROM swatches where id = ? LIMIT 1";
+
+        $stmt = $this->DB->connection->prepare($query);
+        $stmt->bind_param('d', $id);
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+
+
+
+    public function getSwatchMeta()
+    {
+
+        $query = "SELECT id, title, url, alias, metaFields from stocks";
         $stmt = $this->DB->connection->prepare($query);
 
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
+    }
 
+    public function pluckAliasviaSource($source)
+    {
+
+        $query = "SELECT alias from stocks WHERE url = '{$source}' LIMIT 1";
+        $stmt = $this->DB->connection->prepare($query);
+        if (!$stmt->execute()) {
+            return false;
+        } else {
+            $result = $stmt->get_result();
+            $data = $result->fetch_all(MYSQLI_ASSOC);
+            return $data[0]['alias'];
+        }
     }
 
 
-    public function update($payload, $id) {
 
-        if($this->DB->update($payload, $id)){
+
+
+
+    public function update($payload, $id)
+    {
+
+        if ($this->DB->update($payload, $id)) {
 
             return true;
-
         }
 
         return false;
-
     }
 
     public function appendQuery($query, $string)
@@ -125,19 +159,16 @@ class swatchesModule
             $query .= $this->appendQuery($query, $string);
         }
 
-        if(isset($status) && $status == 'all') {
+        if (isset($status) && $status == 'all') {
             $string =  " status IN (0, 1) ";
             $query .= $this->appendQuery($query, $string);
-        }
-        
-        
-        else {
+        } else {
             $string =  " status = 1 ";
             $query .= $this->appendQuery($query, $string);
         }
-                
 
-        
+
+
 
 
         if ($filteringActivate == 'on') :
@@ -146,6 +177,8 @@ class swatchesModule
             $this->applyFilters($filterParamsKeys, $query);
 
         endif;
+
+        $query .= " AND  trashed =  0 ";
 
         $query .= " LIMIT {$offset},  {$limit}";
         $stmt = $this->DB->connection->prepare($query);
@@ -185,16 +218,24 @@ class swatchesModule
     }
 
 
-    public function getSwatchByID($source)
+    public function getSwatchByID($id)
     {
 
-        $query = "SELECT SQL_CALC_FOUND_ROWS id, title, imageUrl, productPrice, productMeta, source, status from swatches where source = ?";
-
+        $query = "SELECT id, title, imageUrl, thumbnail, productPrice, productMeta, source, status from swatches where id = ? LIMIT 1";
         $stmt = $this->DB->connection->prepare($query);
-        $stmt->bind_param('s', $source);
-        $stmt->execute();
+        $stmt->bind_param('d', $id);
+        if (!$stmt->execute()) {
+            return false;
+        }
+
         $result = $stmt->get_result();
-        return $result->fetch_all();
+        $output = $result->fetch_all(MYSQLI_ASSOC);
+
+        if (sizeof($output) > 0) {
+            return $output[0];
+        }
+
+        return false;
     }
 
 

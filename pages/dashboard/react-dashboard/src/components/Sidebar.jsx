@@ -18,18 +18,18 @@ export default function Sidebar() {
           <Link to="/addswatch">Add swatch</Link>
         </li>
 
-        <li>
-          <span className="material-icons-outlined">memory</span>
-          <Link to="/demo">Demo</Link>
-        </li>
-
-        <li>
-          <span className="material-icons-outlined">memory</span>
-          <Link to="/thismustgoto404"> Test 404</Link>
-        </li>
-
         {false && (
           <>
+            <li>
+              <span className="material-icons-outlined">memory</span>
+              <Link to="/demo">Demo</Link>
+            </li>
+
+            <li>
+              <span className="material-icons-outlined">memory</span>
+              <Link to="/thismustgoto404"> Test 404</Link>
+            </li>
+
             <li>
               <span className="material-icons-outlined">perm_media</span>
               <a href="/dashboard/media">Media</a>
