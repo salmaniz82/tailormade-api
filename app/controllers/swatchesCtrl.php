@@ -28,7 +28,6 @@ class swatchesCtrl
 
 
 
-
         // get the alias using url i.e source
         /*
         if ($result = $this->swatchModule->pluckAliasviaSource("foxflannel.com")) {
@@ -323,6 +322,9 @@ class swatchesCtrl
         );
 
         $data['collections'] = $this->swatchModule->getSwatces($paramsQuery);
+
+
+
         $totalMatched = $this->swatchModule->getTotalMatched();
         $data["meta"]["total"] = $totalMatched;
         $data["meta"]['pages'] = ceil($totalMatched / $paramsQuery['limit']);
@@ -336,6 +338,23 @@ class swatchesCtrl
         return View::responseJson($data, 200);
 
         die();
+    }
+
+    public function writeToFile($data, $filepath) {
+
+        $filePath = ABSPATH . $filepath;
+
+        $directory = dirname($filePath);
+
+
+        if (!is_dir($directory)) {
+            mkdir($directory, 0777, true);
+        }
+
+
+        if (file_put_contents($filePath, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)))
+            echo "file created successfully";
+
     }
 
 

@@ -83,4 +83,29 @@ class usersModule
             return false;
         }
     }
+
+
+    public function changePassword($newPassword, $id)
+    {
+
+        $hashedPassword = $this->hashPassword($newPassword);
+        $data['password'] = $hashedPassword;
+
+        if ($this->DB->update($data, $id)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private function hashPassword($password)
+    {
+
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT, array(
+            'cost' => 12
+        ));
+
+
+        return $hashedPassword;
+    }
 }
