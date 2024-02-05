@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { SlClose, SlEye, SlList, SlNote, SlTrash } from "react-icons/sl";
+import { useNavigate } from "react-router-dom";
 
 import AccordianFilters from "../components/AccordianFilters";
 import SwatchPagination from "../components/SwatchPagination";
@@ -14,6 +15,8 @@ export default function Swatches() {
   const [filters, setFilters] = useState([]);
   const [meta, setMeta] = useState([]);
   const [pages, setPages] = useState([0]);
+
+  const Navigate = useNavigate();
 
   const storedSwatchesRequestUrl = localStorage.getItem("swatches_request_url");
   const initialSwatchesRequestUrl = storedSwatchesRequestUrl || API_BASE_URL + "swatches?source=foxflannel.com&limit=50&status=all";
@@ -32,6 +35,10 @@ export default function Swatches() {
     { name: "dugdalebros", url: "shop.dugdalebros.com", active: false },
     { name: "harrisons", url: "harrisons1863.com", active: false }
   ]);
+
+  const handleNavigate = (e, swatchId) => {
+    Navigate(`/editswatch/${swatchId}`);
+  };
 
   const handlePaginate = (e, pageNo) => {
     e.preventDefault();
@@ -313,7 +320,11 @@ export default function Swatches() {
                               <div className="slider round"></div>
                             </label>
                           </th>
-                          <th>{false && <SlNote className="edit-icon" />} &nbsp;</th>
+                          <th>
+                            <div onClick={(e) => handleNavigate(e, swatch.id)}>
+                              <SlNote className="edit-icon" />
+                            </div>
+                          </th>
                           <th>
                             <SlTrash className="delete-icon" onClick={() => handleDelete(swatch.id)} />
                           </th>
