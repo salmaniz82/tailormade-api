@@ -12,6 +12,8 @@ $route->get('/swatchemeta', 'swatchesCtrl@swatchMeta');
 
 $route->get('/swatches?', 'swatchesCtrl@listSwatches');
 
+$route->get('/swatch/{id}', 'swatchesCtrl@getSingle');
+
 $route->delete('/swatches/{id}', 'swatchesCtrl@deleteSwatches');
 
 $route->get('/devtest', 'swatchesCtrl@test');

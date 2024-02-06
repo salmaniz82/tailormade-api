@@ -340,7 +340,8 @@ class swatchesCtrl
         die();
     }
 
-    public function writeToFile($data, $filepath) {
+    public function writeToFile($data, $filepath)
+    {
 
         $filePath = ABSPATH . $filepath;
 
@@ -354,7 +355,6 @@ class swatchesCtrl
 
         if (file_put_contents($filePath, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)))
             echo "file created successfully";
-
     }
 
 
@@ -537,5 +537,23 @@ class swatchesCtrl
     {
         $source = 'harrisons1863.com';
         $this->swatchModule->buildCachedFilters($source);
+    }
+
+    public function getSingle()
+    {
+
+        $id = \Framework\Route::$params['id'];
+
+        if ($swatchData = $this->swatchModule->getSwatchByID($id)) {
+
+            $data["message"] = "fetch Success";
+            $data["swatch"] = $swatchData;
+            $statusCode = 200;
+            return View::responseJson($data, $statusCode);
+        }
+
+        $data["message"] = "Swatch not found";
+        $statusCode = 404;
+        return View::responseJson($data, $statusCode);
     }
 }

@@ -1,9 +1,8 @@
 import { useParams } from "react-router-dom";
+import EditSwatchForm from "../components/EditForm";
 
 export default function EditSwatch() {
-  let { id } = useParams();
-
-  console.log(id);
+  const { id } = useParams();
 
   return (
     <>
@@ -13,7 +12,7 @@ export default function EditSwatch() {
         </div>
 
         <div className="wrapper">
-          <div>Edit Swatch is here</div>
+          <EditSwatchForm swatchId={id} />
         </div>
       </main>
     </>
