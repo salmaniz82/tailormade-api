@@ -149,10 +149,15 @@ function EditSwatchForm({ swatchId }) {
   };
 
   async function sendSaveRequest(payload) {
+    console.log("sending request with", payload);
+
     try {
-      const response = await fetch(`${API_BASE_URL}swatches`, {
-        method: "POST",
-        body: payload
+      const response = await fetch(`${API_BASE_URL}swatches/${swatchId}`, {
+        method: "PUT",
+        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json"
+        }
       });
 
       const data = await response.json();
@@ -171,37 +176,40 @@ function EditSwatchForm({ swatchId }) {
   }
 
   const handleFormReset = () => {
+    /*
     formRef.current.reset();
     setSelectedImage(null);
+    */
   };
 
   const handleSubmit = () => {
-    console.log("status", titleRef.current.value);
-    console.log("status", statusRef.current.value);
-    console.log("stock select", stockRef.current.value);
-
     let productMeta = convertArrayToObject(formData);
 
-    // Create a FormData object
-    const formPayload = new FormData();
+    let formPayload = {
+      title: titleRef.current.value,
+      source: stockRef.current.value || editFormData.source,
+      productMeta: productMeta,
+      operation: "content-update"
+    };
 
-    // Append form data
-    formPayload.append("title", titleRef.current.value);
-    formPayload.append("status", statusRef.current.value);
-    formPayload.append("source", stockRef.current.value);
-    formPayload.append("productMeta", JSON.stringify(productMeta));
-
-    // Append the file
-    formPayload.append("file", selectedImage);
     sendSaveRequest(formPayload);
   };
-
-  const testOptions = [{ value: "shop.dugdalebros.com", label: "dugdalebros" }];
 
   useEffect(() => {
     fetchMetaData();
     fetchSwatch();
   }, [swatchId]);
+
+  const handleTitleUpdate = (inputValue) => {
+    console.log("title value", inputValue);
+
+    setEditFormData((oldValue) => {
+      return {
+        ...oldValue,
+        title: inputValue
+      };
+    });
+  };
 
   useEffect(() => {
     // Call prepareOptions whenever options state changes
@@ -221,12 +229,12 @@ function EditSwatchForm({ swatchId }) {
       <form name="add-swatch-form" id="add-swatch-form" encType="multipart/form-data" method="post" className="bg-white mx-auto" ref={formRef}>
         <div className="dfx">
           <div className="dfx metaauto-fields">
-            <label htmlFor="imgDFxPreview">Image Selected</label>
+            <label htmlFor="imgDFxPreview">&nbsp;</label>
 
             <div className="addingSwatch ImagePreview" id="imgDFxPreview">
-              {selectedImage && (
+              {true && (
                 <div>
-                  <img src={URL.createObjectURL(selectedImage)} alt="Selected" />
+                  <img src={`${API_BASE_URL}/${editFormData.thumbnail}`} alt="Selected" />
                 </div>
               )}
             </div>
@@ -234,17 +242,19 @@ function EditSwatchForm({ swatchId }) {
             <div>&nbsp;</div>
           </div>
 
-          <div className="dfx metaauto-fields">
-            <label htmlFor="image">Image:</label>
+          {false && (
+            <div className="dfx metaauto-fields">
+              <label htmlFor="image">Image:</label>
 
-            <div>
-              <input type="file" id="image" accept="image/*" onChange={handleImageChange} />
+              <div>
+                <input type="file" id="image" accept="image/*" onChange={handleImageChange} />
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="dfx metaauto-fields">
             <label htmlFor="title">Title:</label>
-            <input type="text" name="title" id="title" placeholder="Title" ref={titleRef} value={editFormData.title} onChange={(e) => (titleRef.current.value = e.target.value)} />
+            <input type="text" name="title" id="title" placeholder="Title" ref={titleRef} value={editFormData.title} onChange={(e) => handleTitleUpdate(e.target.value)} />
             <div>&nbsp;</div>
           </div>
 

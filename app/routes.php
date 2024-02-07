@@ -30,32 +30,14 @@ $route->put('/swatches/{id}', 'swatchesCtrl@update');
 $route->get('/dashboard/{param}', 'dashboardCtrl@dasboardLanding');
 
 $route->get('/dashboard?', 'dashboardCtrl@dasboardLanding');
-/*make sure this is not running twice*/
 
-$route->get('/logout', 'userCtrl@logout');
+$route->get('/dashboard/editswatch/{param}', 'dashboardCtrl@dasboardLanding');
 
 $route->get('/login', 'userCtrl@showLogin');
 
 $route->post('/login', 'userCtrl@doLogin');
 
 $route->get('/logout', 'userCtrl@logout');
-
-
-
-$route->get('/mock', function () {
-
-	$mockType = false;
-	if ($mockType) {
-		$data["message"] = "this is for the success";
-		$statusCode = 200;
-	} else {
-		$data["message"] = "Backend error message";
-		$statusCode = 406;
-	}
-
-	return \Framework\View::responseJson($data, $statusCode);
-});
-
 
 
 /*

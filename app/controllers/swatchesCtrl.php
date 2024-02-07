@@ -8,6 +8,7 @@ use App\Modules\swatchesModule;
 use \Framework\View;
 
 
+
 class swatchesCtrl
 {
 
@@ -21,11 +22,25 @@ class swatchesCtrl
         $this->swatchModule = new \App\Modules\swatchesModule();
     }
 
+    private function abortUnAuthResponse()
+    {
+
+        $data['message'] = "Access Denied!";
+        $statusCode = 401;
+
+        return View::responseJson($data, $statusCode);
+    }
+
+
 
     public function test()
     {
 
 
+
+        var_dump(\Framework\Auth::loginStatus());
+
+        die();
 
 
         // get the alias using url i.e source
@@ -61,6 +76,10 @@ class swatchesCtrl
 
     public function deleteSwatches()
     {
+
+        if (!\Framework\Auth::loginStatus())
+            return $this->abortUnAuthResponse();
+
 
 
         $id = \Framework\Route::$params['id'];
@@ -211,7 +230,7 @@ class swatchesCtrl
 
 
 
-    public function handleStatusToggle($id, $status)
+    private function handleStatusToggle($id, $status)
     {
 
 
@@ -231,10 +250,34 @@ class swatchesCtrl
         die();
     }
 
+    private function handleUpdate($id, $request)
+    {
+        $payload['title'] = mysqli_real_escape_string($this->swatchModule->DB->connection, trim($request["title"]));
+        $payload['productMeta'] = json_encode($request["productMeta"]);
+        $payload['source'] = mysqli_real_escape_string($this->swatchModule->DB->connection, trim($request["source"]));
+
+        if ($this->swatchModule->update($payload, $id)) {
+            $data["message"] = "Swatch updated successfully";
+            $data["code"] = 200;
+            $statusCode = 200;
+            return View::responseJson($data, $statusCode);
+            die();
+        }
+        $data["message"] = "Update operation error";
+        $data["code"] = 500;
+        $statusCode = 500;
+        return View::responseJson($data, $statusCode);
+        die();
+    }
+
 
 
     public function update()
     {
+
+        if (!\Framework\Auth::loginStatus())
+            return $this->abortUnAuthResponse();
+
 
         $id = \Framework\Route::$params['id'];
         $request = \Framework\Route::$_PUT;
@@ -242,6 +285,10 @@ class swatchesCtrl
 
         if ($request["operation"] == "status-toggle")
             return $this->handleStatusToggle($id, $request["status"]);
+
+
+        if ($request["operation"] == "content-update")
+            return $this->handleUpdate($id, $request);
 
 
         /*

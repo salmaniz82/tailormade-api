@@ -178,7 +178,7 @@ class swatchesModule
 
         endif;
 
-        $query .= " AND  trashed IN  (0, 1) ";
+        $query .= " AND  trashed = 0 ";
 
         $query .= " LIMIT {$offset},  {$limit}";
         $stmt = $this->DB->connection->prepare($query);
