@@ -7,18 +7,17 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function EditSwatchForm({ swatchId }) {
-  console.log(swatchId);
+  const [loading, setLoading] = useState(true);
 
   const [getMetaData, setMetaData] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
   const [defaultSelect, setDefaultSelect] = useState(null);
+  const [editFormData, setEditFormData] = useState(null);
   const [formData, setFormData] = useState([]);
   const [newKey, setNewKey] = useState("");
   const [newValue, setNewValue] = useState("");
   const [showAddFields, setShowAddFields] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-
-  const [editFormData, setEditFormData] = useState(null);
 
   const [FormErro, setFormError] = useState(false);
 
@@ -28,7 +27,7 @@ function EditSwatchForm({ swatchId }) {
 
   const formRef = useRef();
 
-  let options = null;
+  const [options, setOptions] = useState([]);
 
   const fetchMetaData = async () => {
     try {
@@ -38,11 +37,12 @@ function EditSwatchForm({ swatchId }) {
       if (responseData.metadata !== undefined && response.ok) {
         setMetaData(responseData.metadata);
 
-        options = responseData.metadata.map((meta) => ({
+        let preparedOPtions = responseData.metadata.map((meta) => ({
           value: meta.url,
           label: meta.title,
           metaFields: meta.metaFields
         }));
+        setOptions((oldvalues) => preparedOPtions);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -56,31 +56,54 @@ function EditSwatchForm({ swatchId }) {
       const resJson = await response.json();
 
       if (!response.ok) {
-        const errorBody = await resJson.swatch.message;
+        console.log("respons is ok");
+        const errorBody = resJson.message;
 
         throw new Error(errorBody);
       } else {
-        setEditFormData(resJson.swatch);
-        let rawObjectMeta = JSON.parse(resJson.swatch.productMeta);
+        let swatchData = resJson.swatch;
+        setEditFormData(swatchData);
 
+        let rawObjectMeta = JSON.parse(swatchData.productMeta);
         let formattedObjectMeta = Object.entries(rawObjectMeta).map(([key, value]) => ({ key, value }));
-
-        let swatchSource = resJson.swatch.source;
-
-        console.log("options", options);
-
-        const defaultOption = options.find((option) => option.value == swatchSource);
-
-        setDefaultSelect(defaultOption);
-
-        console.log("default option", defaultOption);
-
-        stockRef.current.value = resJson.swatch.source;
         setFormData(formattedObjectMeta);
+
+        let swatchSource = swatchData.source;
+
+        setTimeout(() => {
+          console.log("options timeout", options);
+        }, 500);
+
+        /*
+        const defaultOption = options.find((option) => option.value == swatchSource);
+        delete defaultOption.metaFields;
+        setDefaultSelect(defaultOption);
+        console.log("hello say ", defaultOption);       
+        */
+
+        /*
+        const result = await prepareOptions(swatchSource);
+        */
+
+        console.log("what to say");
       }
-    } catch (error) {
-      console.log(error.message);
-    }
+    } catch (error) {}
+  };
+
+  const prepareOptions = (currentSource) => {
+    console.log(options);
+    return new Promise((resolve, reject) => {
+      const defaultOption = options.find((option) => option.value == currentSource);
+
+      delete defaultOption.metaFields;
+
+      if (defaultOption) {
+        setDefaultSelect([defaultOption]);
+        return resolve(defaultOption);
+      }
+
+      return reject("unmatched entitity");
+    });
   };
 
   const handleSelectChange = (selectedOption) => {
@@ -173,20 +196,25 @@ function EditSwatchForm({ swatchId }) {
     sendSaveRequest(formPayload);
   };
 
-  /*
-  options = getMetaData.map((meta) => ({
-    value: meta.url,
-    label: meta.title,
-    metaFields: meta.metaFields
-  }));
-  */
-
   const testOptions = [{ value: "shop.dugdalebros.com", label: "dugdalebros" }];
 
   useEffect(() => {
     fetchMetaData();
     fetchSwatch();
-  }, []);
+  }, [swatchId]);
+
+  useEffect(() => {
+    // Call prepareOptions whenever options state changes
+    if (options.length > 0 && editFormData) {
+      prepareOptions(editFormData.source)
+        .then((result) => {
+          console.log(result);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [options, editFormData]);
 
   return (
     editFormData && (
@@ -222,8 +250,8 @@ function EditSwatchForm({ swatchId }) {
 
           <div className="dfx metaauto-fields">
             <label htmlFor="stock-select">STOCK COLLECTION</label>
-            <Select options={options} onChange={handleSelectChange} placeholder="Choose Stock Collection" id="stock-select" ref={stockRef} value={testOptions.value} />
-            <div>{options}</div>
+            <Select options={options} onChange={handleSelectChange} placeholder="Choose Stock Collection" id="stock-select" ref={stockRef} value={defaultSelect} />
+            <div> &nbsp; </div>
           </div>
 
           {formData && (
