@@ -7,6 +7,7 @@ import Demo from "./pages/Demo.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import AddSwatch from "./pages/AddSwatch.jsx";
 import EditSwatch from "./pages/EditSwatch.jsx";
+import Collections from "./pages/Collections.jsx";
 
 function App() {
   const message = "this is from the reactJS";
@@ -19,6 +20,7 @@ function App() {
           <Route path="/demo" element={<Demo />} />
           <Route path="/addswatch" element={<AddSwatch />} />
           <Route path="/editswatch/:id" element={<EditSwatch />} />
+          <Route path="/collections" element={<Collections />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Route>

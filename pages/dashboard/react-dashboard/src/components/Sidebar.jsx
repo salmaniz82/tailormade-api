@@ -18,6 +18,16 @@ export default function Sidebar() {
           <Link to="/addswatch">Add swatch</Link>
         </li>
 
+        <li>
+          <span className="material-icons-outlined">inventory</span>
+          <Link to="/collections">Collections</Link>
+        </li>
+
+        <li>
+          <span className="material-icons-outlined t-red">logout</span>
+          <a href="/logout">Logout</a>
+        </li>
+
         {false && (
           <>
             <li>
@@ -106,11 +116,6 @@ export default function Sidebar() {
             </li>
           </>
         )}
-
-        <li>
-          <span className="material-icons-outlined t-red">logout</span>
-          <a href="/logout">Logout</a>
-        </li>
       </ul>
     </aside>
   );

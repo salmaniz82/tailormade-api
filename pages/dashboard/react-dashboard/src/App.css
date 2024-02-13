@@ -1617,3 +1617,72 @@ h5 {
   padding: 20px;
   margin-top: 50px;
 }
+
+ul.stockkeyList {
+  margin: 0;
+  padding: 0;
+  padding-bottom: 20px;
+}
+
+ul.stockkeyList li {
+  font-size: 14px;
+}
+
+table.stock-table tbody {
+  vertical-align: top;
+}
+
+table.stock-table tbody tr {
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+}
+
+.dfx-grid {
+  display: flex;
+  gap: 10px;
+}
+
+.flex-basis-70 {
+  flex-basis: 70%;
+}
+
+.flex-basis-30 {
+  flex-basis: 30%;
+}
+
+.max-w-300 {
+  max-width: 300px;
+}
+
+.addNewStockWrapper {
+  flex-basis: 50%;
+}
+
+.p-10 {
+  padding: 10px;
+}
+
+.justify-space-between {
+  justify-content: space-between;
+}
+
+.text-md {
+  font-size: 1.25rem;
+}
+.text-lg {
+  font-size: 1.5rem;
+}
+
+.addStockMetaKeys-WRap .edit-icon {
+  width: 35px !important;
+  height: 35px !important;
+}
+
+#add-swatch-form.addStockForm {
+  margin-top: 10px !important;
+}
+
+.errorLabels {
+  color: rgb(179, 42, 42);
+  font-size: 14px;
+}

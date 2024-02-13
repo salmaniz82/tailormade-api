@@ -33,6 +33,9 @@ $route->get('/dashboard?', 'dashboardCtrl@dasboardLanding');
 
 $route->get('/dashboard/editswatch/{param}', 'dashboardCtrl@dasboardLanding');
 
+
+$route->get('/stocks', 'stockCtrl@listCollections');
+
 $route->get('/login', 'userCtrl@showLogin');
 
 $route->post('/login', 'userCtrl@doLogin');
