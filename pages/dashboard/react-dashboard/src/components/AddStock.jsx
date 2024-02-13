@@ -1,7 +1,11 @@
 import { useRef, useState } from "react";
 import { SlClose, SlEye, SlList, SlNote, SlTrash, SlPlus } from "react-icons/sl";
+import { API_BASE_URL } from "../utils/helpers";
 
-export default function AddStock({ onCancelAdd }) {
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+export default function AddStock({ onCancelAdd, onNewStockAdd }) {
   const [metaKeys, setMetaKeys] = useState([]);
   const [formError, setFormError] = useState([]);
 
@@ -9,8 +13,12 @@ export default function AddStock({ onCancelAdd }) {
   const titleRef = useRef();
   const urlRef = useRef();
   const aliasRef = useRef();
-
   const metaKeyRef = useRef();
+
+  function isValidDomainName(domain) {
+    const domainPattern = /^(?:(?!-)[A-Za-z0-9-]{1,63}(?<!-)\.)+[A-Za-z]{2,6}$/;
+    return domainPattern.test(domain);
+  }
 
   const addManager = () => {
     const newMetaKey = metaKeyRef.current.value.trim();
@@ -47,6 +55,10 @@ export default function AddStock({ onCancelAdd }) {
       error.push("url is empty");
     }
 
+    if (urlRef.current.value != "" && !isValidDomainName(urlRef.current.value)) {
+      error.push("not valid domain url");
+    }
+
     if (aliasRef.current.value == "") {
       error.push("alias is empty");
     }
@@ -55,9 +67,45 @@ export default function AddStock({ onCancelAdd }) {
       error.push("please add meta keys");
     }
 
-    console.log(error);
+    if (error.length > 0) {
+      setFormError(error);
+    } else {
+      setFormError([]);
+      handleSubmitRequest();
+    }
+  };
 
-    error.length > 0 ? setFormError(error) : setFormError([]);
+  const handleSubmitRequest = () => {
+    var payload = {
+      title: titleRef.current.value,
+      url: urlRef.current.value,
+      alias: urlRef.current.value,
+      metaFields: metaKeys
+    };
+
+    (async () => {
+      console.log("async send is process");
+
+      try {
+        const request = await fetch(`${API_BASE_URL}stocks`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await request.json();
+
+        if (!request.ok) {
+          throw new Error(data.message);
+        } else {
+          onNewStockAdd(data.newStock);
+        }
+      } catch (error) {
+        toast.error(data.message);
+      }
+    })();
   };
 
   return (
@@ -115,6 +163,8 @@ export default function AddStock({ onCancelAdd }) {
           </div>
         </div>
       </form>
+
+      <ToastContainer />
     </div>
   );
 }

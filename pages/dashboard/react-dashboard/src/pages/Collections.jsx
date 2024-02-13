@@ -3,6 +3,9 @@ import { API_BASE_URL } from "../utils/helpers";
 import { SlClose, SlEye, SlList, SlNote, SlTrash } from "react-icons/sl";
 import AddStock from "../components/AddStock";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export default function Collections() {
   const [loading, setLoading] = useState(true);
   const [stockData, setStockData] = useState(null);
@@ -28,6 +31,11 @@ export default function Collections() {
     setModeAddNew(false);
   };
 
+  const newStockHandler = (newStock) => {
+    setStockData((oldStocks) => [...oldStocks, newStock]);
+    closeAdd();
+  };
+
   useEffect(() => {
     fetchStock();
   }, []);
@@ -40,8 +48,8 @@ export default function Collections() {
             <h3 className="page-title bg-white flex-basis-70"> Collections </h3>
             <div className="flex-basis-30 bg-white">
               {!modeAddNew && (
-                <div class="flashButtonWrapper mx-auto max-w-300">
-                  <div class="text_btn_lg" onClick={() => setModeAddNew(true)}>
+                <div className="flashButtonWrapper mx-auto max-w-300">
+                  <div className="text_btn_lg" onClick={() => setModeAddNew(true)}>
                     ADD NEW
                   </div>
                 </div>
@@ -89,8 +97,9 @@ export default function Collections() {
               </tbody>
             </table>
           </div>
-          {modeAddNew && <AddStock onCancelAdd={closeAdd} />}
+          {modeAddNew && <AddStock onCancelAdd={closeAdd} onNewStockAdd={newStockHandler} />}
         </div>
+        <ToastContainer />
       </main>
     </>
   );

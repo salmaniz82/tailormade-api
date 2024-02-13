@@ -35,4 +35,32 @@ class stockCtrl extends BaseController
         $statusCode = 404;
         return View::responseJson($data, $statusCode);
     }
+
+    public function save()
+    {
+
+        extract($_POST);
+        $dataPayload = array(
+            'title' => $title,
+            'url' => $url,
+            'alias' => $alias,
+            'metaFields' => json_encode($metaFields)
+        );
+
+        if ($lastId = $this->stockModule->save($dataPayload)) {
+
+            $data["message"] = "New stock added";
+
+            if ($newStock = $this->stockModule->getStockByID($lastId)) {
+                $data["newStock"] = $newStock;
+            }
+
+            $statusCode = 200;
+            return View::responseJson($data, $statusCode);
+        } else {
+            $data["message"] = "Operation failed";
+            $statusCode = 500;
+            return View::responseJson($data, $statusCode);
+        }
+    }
 }

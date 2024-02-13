@@ -95,4 +95,15 @@ class stockModule
 
         return false;
     }
+
+
+    public function save($payload)
+    {
+
+        if ($id = $this->DB->insert($payload)) {
+            return $id;
+        }
+
+        return false;
+    }
 }
