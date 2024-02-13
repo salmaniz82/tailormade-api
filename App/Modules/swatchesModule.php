@@ -118,7 +118,7 @@ class swatchesModule
         $outputArrayKeys = [];
 
         if ($source == 'foxflannel.com')
-            $outputArrayKeys = ['COLOUR', 'PATTERN', 'METRIC_WEIGHT', 'IMPERIAL_WEIGHT'];
+            $outputArrayKeys = ['MILL', 'BUNCH', 'COLOUR', 'SEASON', 'WEIGHT', 'PATTERN', 'COMPOSITION'];
 
         if ($source == 'shop.dugdalebros.com')
             $outputArrayKeys = ['material', 'Width', 'Weight', 'Bunch_Name', 'Bunch_Number'];

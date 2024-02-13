@@ -580,10 +580,20 @@ class swatchesCtrl
 
 
 
-    public function testBuildFilter()
+    public function updateFilters()
     {
-        $source = 'harrisons1863.com';
-        $this->swatchModule->buildCachedFilters($source);
+
+        if (isset($_GET['source'])) {
+            $source = $_GET['source'];
+            $this->swatchModule->buildCachedFilters($source);
+            $data["message"] = "Filter updated successfully";
+            $statusCode = 200;
+            return View::responseJson($data, $statusCode);
+        }
+
+        $data["message"] = "Error while updating filters";
+        $statusCode = 500;
+        return View::responseJson($data, $statusCode);
     }
 
     public function getSingle()

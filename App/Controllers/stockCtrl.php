@@ -47,18 +47,27 @@ class stockCtrl extends BaseController
             'metaFields' => json_encode($metaFields)
         );
 
-        if ($lastId = $this->stockModule->save($dataPayload)) {
+        try {
 
-            $data["message"] = "New stock added";
+            if ($lastId = $this->stockModule->save($dataPayload)) {
 
-            if ($newStock = $this->stockModule->getStockByID($lastId)) {
-                $data["newStock"] = $newStock;
+                $data["message"] = "New stock added";
+
+                if ($newStock = $this->stockModule->getStockByID($lastId)) {
+                    $data["newStock"] = $newStock;
+                }
+
+                $statusCode = 200;
+                return View::responseJson($data, $statusCode);
+            } else {
+                $data["message"] = "Operation failed";
+                $statusCode = 500;
+                return View::responseJson($data, $statusCode);
             }
+        } catch (\Exception $error) {
 
-            $statusCode = 200;
-            return View::responseJson($data, $statusCode);
-        } else {
-            $data["message"] = "Operation failed";
+            $data["message"] = "Invalid data, please check duplicate entries";
+            $data["debug"] = $error->getMessage();
             $statusCode = 500;
             return View::responseJson($data, $statusCode);
         }

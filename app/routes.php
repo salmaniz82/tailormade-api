@@ -46,6 +46,8 @@ $route->post('/login', 'userCtrl@doLogin');
 
 $route->get('/logout', 'userCtrl@logout');
 
+$route->get('/filters?', 'swatchesCtrl@updateFilters');
+
 
 /*
 DISABLED ROUTES
@@ -53,7 +55,7 @@ $route->post('/swatch', 'swatchesCtrl@store');
 $route->post('/request-swatch', 'swatchesCtrl@processRequestSwatches');
 $route->get('/testmail', 'swatchesCtrl@testEmail');
 $route->get('/template', 'swatchesCtrl@loadSwatchTemplate');
-$route->get('/filters', 'swatchesCtrl@testBuildFilter');
+
 */
 
 $route->otherwise(function () {

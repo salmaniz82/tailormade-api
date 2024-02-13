@@ -79,7 +79,7 @@ export default function AddStock({ onCancelAdd, onNewStockAdd }) {
     var payload = {
       title: titleRef.current.value,
       url: urlRef.current.value,
-      alias: urlRef.current.value,
+      alias: aliasRef.current.value,
       metaFields: metaKeys
     };
 
@@ -95,15 +95,15 @@ export default function AddStock({ onCancelAdd, onNewStockAdd }) {
           body: JSON.stringify(payload)
         });
 
-        const data = await request.json();
-
         if (!request.ok) {
-          throw new Error(data.message);
-        } else {
-          onNewStockAdd(data.newStock);
+          const errorData = await request.json();
+          throw new Error(errorData.message);
         }
+
+        const data = await request.json();
+        onNewStockAdd(data.newStock);
       } catch (error) {
-        toast.error(data.message);
+        toast.error(error.message);
       }
     })();
   };
