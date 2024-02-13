@@ -36,6 +36,30 @@ export default function Collections() {
     closeAdd();
   };
 
+  const handleDelete = (itemId) => {
+    console.log("delete stock with id of ", itemId);
+
+    (async () => {
+      try {
+        const request = await fetch(`${API_BASE_URL}stocks/${itemId}`, {
+          method: "DELETE"
+        });
+
+        const reponseData = await request.json();
+
+        if (!request.ok) {
+          throw new Error(reponseData.message);
+        } else {
+          setStockData((oldStock) => {
+            return oldStock.filter((item) => item.id != itemId);
+          });
+        }
+      } catch (error) {
+        console.log("error", error.message);
+      }
+    })();
+  };
+
   useEffect(() => {
     fetchStock();
   }, []);
@@ -69,6 +93,7 @@ export default function Collections() {
                   <th>Alias</th>
                   <th>Meta Keys</th>
                   <th>&nbsp;</th>
+                  <th>&nbsp;</th>
                 </tr>
               </thead>
 
@@ -91,6 +116,9 @@ export default function Collections() {
 
                       <td>
                         <SlNote className="edit-icon" />
+                      </td>
+                      <td>
+                        <SlTrash className="delete-icon" onClick={() => handleDelete(item.id)} />
                       </td>
                     </tr>
                   ))}

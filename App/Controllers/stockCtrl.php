@@ -63,4 +63,18 @@ class stockCtrl extends BaseController
             return View::responseJson($data, $statusCode);
         }
     }
+
+    public function delete()
+    {
+
+        $id = \Framework\Route::$params['id'];
+
+        if ($this->stockModule->delete($id)) {
+            $data["message"] = "Stock Deleted!";
+            return View::responseJson($data, 200);
+        }
+
+        $data["message"] = "Error while deleteing record";
+        return View::responseJson($data, 200);
+    }
 }
