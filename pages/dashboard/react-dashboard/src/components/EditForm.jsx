@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import { API_BASE_URL, convertArrayToObject } from "../utils/helpers";
 import Select from "react-select";
-import { SlClose, SlPlus } from "react-icons/sl";
+import { SlClose, SlPlus, SlArrowLeftCircle, SlArrowRightCircle } from "react-icons/sl";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import { useNavigate } from "react-router-dom";
+
 function EditSwatchForm({ swatchId }) {
+  const Navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
   const [getMetaData, setMetaData] = useState([]);
@@ -224,12 +227,22 @@ function EditSwatchForm({ swatchId }) {
     }
   }, [options, editFormData]);
 
+  const handleNavigation = (id, direction) => {
+    console.log(id, direction);
+
+    const swatchId = direction == "next" ? (id += 1) : (id -= 1);
+
+    Navigate(`/editswatch/${swatchId}`);
+  };
+
   return (
     editFormData && (
       <form name="add-swatch-form" id="add-swatch-form" encType="multipart/form-data" method="post" className="bg-white mx-auto" ref={formRef}>
         <div className="dfx">
           <div className="dfx metaauto-fields">
-            <label htmlFor="imgDFxPreview">&nbsp;</label>
+            <label htmlFor="imgDFxPreview">
+              <SlArrowLeftCircle className="edit-icon r-icon" onClick={() => handleNavigation(editFormData.id, "prev")} />
+            </label>
 
             <div className="addingSwatch ImagePreview" id="imgDFxPreview">
               {true && (
@@ -239,7 +252,9 @@ function EditSwatchForm({ swatchId }) {
               )}
             </div>
 
-            <div>&nbsp;</div>
+            <div>
+              <SlArrowRightCircle className="edit-icon r-icon" onClick={() => handleNavigation(editFormData.id, "next")} />
+            </div>
           </div>
 
           {false && (
