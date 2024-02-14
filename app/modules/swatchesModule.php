@@ -116,11 +116,14 @@ class swatchesModule
     {
 
         $outputArrayKeys = [];
+        return $this->dynamicDBFilters($source, $clean);
 
+        /*
+        die();
         if ($source == 'foxflannel.com')
             $outputArrayKeys = ['MILL', 'BUNCH', 'COLOUR', 'SEASON', 'WEIGHT', 'PATTERN', 'COMPOSITION', 'DESCRIPTION'];
-
         if ($source == 'shop.dugdalebros.com')
+        
             $outputArrayKeys = ['material', 'Width', 'Weight', 'Bunch_Name', 'Bunch_Number'];
 
         if ($source == 'harrisons1863.com')
@@ -138,9 +141,37 @@ class swatchesModule
         }
 
         return $outputArrayKeys;
+        */
+    }
+
+    public function replaceSpacesWithUnderscores(array $array): array
+    {
+        // Loop through each item in the array
+        foreach ($array as &$item) {
+            // Replace spaces with underscores using str_replace
+            $item = str_replace(" ", "_", $item);
+        }
+        // Return the modified array
+        return $array;
     }
 
 
+
+    public function dynamicDBFilters($source, $clean = false)
+    {
+
+        $query = "SELECT metaFields from stocks WHERE url = '{$source}' LIMIT 1";
+        $stmt = $this->DB->connection->prepare($query);
+        if (!$stmt->execute()) {
+            return false;
+        } else {
+            $result = $stmt->get_result();
+            $data = $result->fetch_all(MYSQLI_ASSOC);
+            $metaFieldsArray = json_decode($data[0]['metaFields']);
+
+            return !$clean ? $this->replaceSpacesWithUnderscores($metaFieldsArray) : $metaFieldsArray;
+        }
+    }
 
 
     public function getSwatces($payload = null)

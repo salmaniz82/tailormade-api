@@ -36,15 +36,21 @@ class swatchesCtrl
     public function test()
     {
 
+        $source = "loropiana.com";
 
+        $data = $this->swatchModule->dynamicDBFilters($source);
 
-        var_dump(\Framework\Auth::loginStatus());
+        var_dump($data);
 
         die();
 
 
+
+
         // get the alias using url i.e source
+
         /*
+        var_dump(\Framework\Auth::loginStatus());
         if ($result = $this->swatchModule->pluckAliasviaSource("foxflannel.com")) {
             var_dump($result);
         }
