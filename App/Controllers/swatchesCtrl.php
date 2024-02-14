@@ -37,7 +37,7 @@ class swatchesCtrl
     {
 
 
-        $source = "levis.com";
+        $source = "foxflannel.com";
 
         $data = $this->swatchModule->buildFilterDynamic($source);
 
@@ -381,7 +381,7 @@ class swatchesCtrl
         $paramsQuery['limit'] = (isset($_GET['limit']) && is_numeric($_GET['limit'])) ? $_GET['limit'] : 12;
         $paramsQuery['offset'] = ($paramsQuery['page'] - 1) * $paramsQuery['limit'];
         $paramsQuery['filteringActivate'] = (isset($_GET['filteringActivate']) && $_GET['filteringActivate'] != "") ? $_GET['filteringActivate'] : 'off';
-        $paramsQuery['source'] = (isset($_GET['source']) && $_GET['source'] != "") ? $_GET['source'] : 'foxflannel.com';
+        $paramsQuery['source'] = (isset($_GET['source']) && $_GET['source'] != "") ? $_GET['source'] : 'all';
         $paramsQuery['status'] = isset($_GET['status']) ?: '1';
 
         if ($paramsQuery['filteringActivate'] == 'on') :
@@ -412,7 +412,7 @@ class swatchesCtrl
         /*
         $data['filters'] = $this->swatchModule->buildFilterDynamic($paramsQuery['source']);
         */
-        $data['filters'] = $this->swatchModule->getCachedFilters($paramsQuery['source']);
+        $data['filters'] = $this->swatchModule->getCachedFilters($paramsQuery['source']) || [];
 
         $stockModule = $this->swatchModule = new \App\Modules\stockModule();
         $data['sources'] = $stockModule->swatchSources();

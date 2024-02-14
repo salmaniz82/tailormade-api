@@ -326,6 +326,9 @@ class swatchesModule
         return array_unique($result);
     }
 
+
+    
+
     public function buildFilterDynamic($source)
     {
 
@@ -360,13 +363,11 @@ class swatchesModule
             */
 
             $filterHeader = $uniqueFilterKeys;
-            if ($source == 'shop.dugdalebros.com') {
-                $filterHeader = array_diff($filterHeader, ['Product SKU']);
-            }
 
-            if ($source == 'loropiana.com') {
-                $filterHeader = array_diff($filterHeader, ['style']);
-            }
+            $negativeFilters = ['description', 'style', 'Product SKU', 'stockLength', 'longestSingleLength'];
+
+
+            $filterHeader = array_udiff($filterHeader, $negativeFilters, 'strcasecmp');
 
 
             $rawFilter = [];
