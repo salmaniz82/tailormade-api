@@ -43,6 +43,32 @@ class stockModule
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function swatchSources()
+    {
+
+        $query = "SELECT title as name, url from stocks";
+        $stmt = $this->DB->connection->prepare($query);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $data =  $result->fetch_all(MYSQLI_ASSOC);
+
+
+        $all = array(
+
+            "name" => "All",
+            "url" => "all"
+
+        );
+
+        array_unshift($data, $all);
+
+        foreach ($data as &$item) {
+            $item['active'] = false;
+        }
+
+        return $data;
+    }
+
     public function pluckAliasviaSource($source)
     {
 

@@ -186,8 +186,11 @@ class swatchesModule
                     source, status from swatches ";
 
         if (isset($source)) {
-            $string = " source = '{$source}'";
-            $query .= $this->appendQuery($query, $string);
+            if ($source != "all") {
+
+                $string = " source = '{$source}'";
+                $query .= $this->appendQuery($query, $string);
+            }
         }
 
         if (isset($status) && $status == 'all') {
@@ -294,6 +297,8 @@ class swatchesModule
 
     public function getUniqueFilterValues($filterKey, $source)
     {
+
+
         $query = "SELECT DISTINCT 
             JSON_UNQUOTE(JSON_EXTRACT(productMeta, '$.\"{$filterKey}\"')) 
             AS key_value
@@ -302,7 +307,8 @@ class swatchesModule
         $stmt = $this->DB->connection->prepare($query);
         $stmt->execute();
         $result = $stmt->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC);
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+        return $data;
     }
 
     private function recursiveMergeUnique($arrays)
@@ -339,9 +345,7 @@ class swatchesModule
         if ($uniqueFilterKeys = $this->getSourceFilterStaticKeys($source, true)) {
 
             /*
-
             used when picked dynamic
-
             if (sizeof($uniqueFilterKeys) > 1) {
                 foreach ($uniqueFilterKeys as $key => $value) {
                     $uniqueFilterHeader = json_decode($value[0]);

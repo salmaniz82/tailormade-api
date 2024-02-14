@@ -18,8 +18,12 @@ export default function Swatches() {
 
   const Navigate = useNavigate();
 
+  /*
   const storedSwatchesRequestUrl = localStorage.getItem("swatches_request_url");
-  const initialSwatchesRequestUrl = storedSwatchesRequestUrl || API_BASE_URL + "swatches?source=foxflannel.com&limit=50&status=all";
+  */
+
+  const storedSwatchesRequestUrl = null;
+  const initialSwatchesRequestUrl = storedSwatchesRequestUrl || API_BASE_URL + "swatches?source=all&limit=50&status=all";
 
   const [swatches_request_url, setsSatches_request_url] = useState(initialSwatchesRequestUrl);
 
@@ -29,12 +33,17 @@ export default function Swatches() {
   const [stockAccordian, setStockAccordian] = useState(false);
   const [listMeta, setListMeta] = useState([]);
 
+  const [swatchSources, setSwatchSources] = useState([]);
+
+  /*
+
   const [swatchSources, setSwatchSources] = useState([
     { name: "foxflannel", url: "foxflannel.com", active: true },
     { name: "loropiana", url: "loropiana.com", active: false },
     { name: "dugdalebros", url: "shop.dugdalebros.com", active: false },
     { name: "harrisons", url: "harrisons1863.com", active: false }
   ]);
+  */
 
   const handleNavigate = (e, swatchId) => {
     Navigate(`/editswatch/${swatchId}`);
@@ -178,6 +187,18 @@ export default function Swatches() {
     setShowFilters(!showFilters);
   };
 
+  const indicateActiveSource = (source) => {
+    console.log("indicate source", source);
+
+    console.log("swatch source", swatchSources);
+
+    setSwatchSources((existingSource) => {
+      return existingSource.map((sourceItem) => {
+        return sourceItem.url == source ? { ...sourceItem, active: true } : sourceItem;
+      });
+    });
+  };
+
   useEffect(() => {
     (async () => {
       setLoading(true);
@@ -205,6 +226,10 @@ export default function Swatches() {
           setFilters(response.filters);
         }
 
+        if (data.sources != undefined && swatchSources.length == 0) {
+          setSwatchSources(data.sources);
+        }
+
         if (data.meta != undefined) {
           setListMeta(data.meta);
         }
@@ -212,6 +237,8 @@ export default function Swatches() {
         if (data.filters.length > 0) {
           setFilters(data.filters);
         }
+
+        indicateActiveSource(data.meta.source);
       } catch (error) {
         console.dir(error);
       }
@@ -253,7 +280,7 @@ export default function Swatches() {
                     </div>
                   </div>
 
-                  <AccordianFilters filters={filters} setFilters={setFilters} selectedFilters={selectedFilters} setSelectedFilters={setSelectedFilters} />
+                  {listMeta.source != "all" && <AccordianFilters filters={filters} setFilters={setFilters} selectedFilters={selectedFilters} setSelectedFilters={setSelectedFilters} />}
                 </div>
 
                 <div className="swatch_apply_filters">

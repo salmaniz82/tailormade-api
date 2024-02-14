@@ -36,13 +36,34 @@ class swatchesCtrl
     public function test()
     {
 
-        $source = "loropiana.com";
 
-        $data = $this->swatchModule->dynamicDBFilters($source);
+        $source = "levis.com";
+
+        $data = $this->swatchModule->buildFilterDynamic($source);
+
 
         var_dump($data);
 
+
+
+
+
+        /*
+        $data = $this->swatchModule->dynamicDBFilters($source);
+        var_dump($data);
         die();
+        */
+
+
+
+
+
+        /*
+        $stockModule = $this->swatchModule = new \App\Modules\stockModule();
+        $data = $stockModule->swatchSources();
+        var_dump($data);
+        */
+
 
 
 
@@ -160,7 +181,7 @@ class swatchesCtrl
 
             $aliasRootDirectory =  "uploads/images/$alias/";
             $aliasOriginalDirectory = "uploads/images/$alias/original/";
-            $aliasThumbnailDirectory = "uploads/images/$alias./thumbnail/";
+            $aliasThumbnailDirectory = "uploads/images/$alias/thumbnail/";
 
             $originalPath = $aliasOriginalDirectory . $fileName;
 
@@ -258,6 +279,11 @@ class swatchesCtrl
 
     private function handleUpdate($id, $request)
     {
+
+        var_dump($request);
+
+        die();
+
         $payload['title'] = mysqli_real_escape_string($this->swatchModule->DB->connection, trim($request["title"]));
         $payload['productMeta'] = json_encode($request["productMeta"]);
         $payload['source'] = mysqli_real_escape_string($this->swatchModule->DB->connection, trim($request["source"]));
@@ -387,6 +413,9 @@ class swatchesCtrl
         $data['filters'] = $this->swatchModule->buildFilterDynamic($paramsQuery['source']);
         */
         $data['filters'] = $this->swatchModule->getCachedFilters($paramsQuery['source']);
+
+        $stockModule = $this->swatchModule = new \App\Modules\stockModule();
+        $data['sources'] = $stockModule->swatchSources();
 
         return View::responseJson($data, 200);
 
@@ -588,9 +617,6 @@ class swatchesCtrl
 
     public function updateFilters()
     {
-
-
-
 
 
         if (isset($_GET['source'])) {
