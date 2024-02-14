@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { API_BASE_URL } from "../utils/helpers";
-import { SlClose, SlEye, SlList, SlNote, SlTrash } from "react-icons/sl";
+import { SlRefresh, SlNote, SlTrash } from "react-icons/sl";
 import AddStock from "../components/AddStock";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import EditStock from "../components/EditStock";
 
-export default function Collections() {
+export default function Stocks() {
   const [loading, setLoading] = useState(true);
+
   const [stockData, setStockData] = useState(null);
 
   const [modeAddNew, setModeAddNew] = useState(false);
@@ -60,6 +62,48 @@ export default function Collections() {
     })();
   };
 
+  const handleFilterUpdate = (sourceUrl) => {
+    (async () => {
+      try {
+        const request = await fetch(`${API_BASE_URL}filters?source=${sourceUrl}`);
+
+        if (!request.ok) {
+          const errorData = await request.json();
+          throw new Error(errorData.message);
+        }
+
+        const successData = await request.json();
+
+        toast.success(successData.message);
+      } catch (error) {
+        toast.error(error.message);
+      }
+    })();
+  };
+
+  const syncUpdatedRecord = (updatedRecord) => {
+    let updatedID = updatedRecord.id;
+
+    setStockData((existingStock) => {
+      return existingStock.map((item) => {
+        return item.id === updatedID ? updatedRecord : item;
+      });
+    });
+  };
+
+  const [editActive, setEditActive] = useState(false);
+  const [editItem, setEditItem] = useState(false);
+
+  const activateEdit = (item) => {
+    setEditItem(item);
+    setEditActive(true);
+  };
+
+  const clearEdit = () => {
+    setEditActive(false);
+    setEditItem(false);
+  };
+
   useEffect(() => {
     fetchStock();
   }, []);
@@ -69,7 +113,7 @@ export default function Collections() {
       <main className="dashboard-content_wrap">
         <div className="wrapper">
           <div className="dfx-grid">
-            <h3 className="page-title bg-white flex-basis-70"> Collections </h3>
+            <h3 className="page-title bg-white flex-basis-70"> STOCKS </h3>
             <div className="flex-basis-30 bg-white">
               {!modeAddNew && (
                 <div className="flashButtonWrapper mx-auto max-w-300">
@@ -94,6 +138,7 @@ export default function Collections() {
                   <th>Meta Keys</th>
                   <th>&nbsp;</th>
                   <th>&nbsp;</th>
+                  <th>&nbsp;</th>
                 </tr>
               </thead>
 
@@ -115,7 +160,11 @@ export default function Collections() {
                       </td>
 
                       <td>
-                        <SlNote className="edit-icon" />
+                        <SlRefresh className="green-icon" onClick={() => handleFilterUpdate(item.url)} />
+                      </td>
+
+                      <td>
+                        <SlNote className="edit-icon" onClick={() => activateEdit(item)} />
                       </td>
                       <td>
                         <SlTrash className="delete-icon" onClick={() => handleDelete(item.id)} />
@@ -126,6 +175,7 @@ export default function Collections() {
             </table>
           </div>
           {modeAddNew && <AddStock onCancelAdd={closeAdd} onNewStockAdd={newStockHandler} />}
+          {editActive && <EditStock clearEdit={clearEdit} onRecordUpdated={syncUpdatedRecord} activeEditItem={editItem} />}
         </div>
         <ToastContainer />
       </main>

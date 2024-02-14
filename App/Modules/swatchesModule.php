@@ -118,7 +118,7 @@ class swatchesModule
         $outputArrayKeys = [];
 
         if ($source == 'foxflannel.com')
-            $outputArrayKeys = ['MILL', 'BUNCH', 'COLOUR', 'SEASON', 'WEIGHT', 'PATTERN', 'COMPOSITION'];
+            $outputArrayKeys = ['MILL', 'BUNCH', 'COLOUR', 'SEASON', 'WEIGHT', 'PATTERN', 'COMPOSITION', 'DESCRIPTION'];
 
         if ($source == 'shop.dugdalebros.com')
             $outputArrayKeys = ['material', 'Width', 'Weight', 'Bunch_Name', 'Bunch_Number'];
@@ -349,7 +349,17 @@ class swatchesModule
                 }
 
                 $items = array_column($values, 'key_value');
+                /*
+                fix null trim deprecated
                 $items = array_values(array_unique(array_filter($items, 'trim')));
+                */
+
+                $items = array_values(array_unique(array_filter($items, function ($item) {
+                    // Check if $item is not null before applying trim
+                    return $item !== null ? trim($item) : null;
+                })));
+
+
                 if (!empty($items)) {
                     $cleanFilter[] = [
                         'name' => $key,
@@ -403,10 +413,8 @@ class swatchesModule
         $filename = "filer-$source.json";
         $cacheFile = $cacheDir . $filename;
 
-
         $filterData = $this->buildFilterDynamic($source);
-        if (file_put_contents($cacheFile, json_encode($filterData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)))
-            echo "file created successfully";
+        return (file_put_contents($cacheFile, json_encode($filterData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE))) ? true : false;
     }
 }
 

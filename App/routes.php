@@ -40,6 +40,8 @@ $route->post('/stocks', 'stockCtrl@save');
 
 $route->delete('/stocks/{id}', 'stockCtrl@delete');
 
+$route->put('/stocks/{id}', 'stockCtrl@update');
+
 $route->get('/login', 'userCtrl@showLogin');
 
 $route->post('/login', 'userCtrl@doLogin');

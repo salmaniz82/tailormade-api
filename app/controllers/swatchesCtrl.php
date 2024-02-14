@@ -583,8 +583,13 @@ class swatchesCtrl
     public function updateFilters()
     {
 
+
+
+
+
         if (isset($_GET['source'])) {
             $source = $_GET['source'];
+
             $this->swatchModule->buildCachedFilters($source);
             $data["message"] = "Filter updated successfully";
             $statusCode = 200;

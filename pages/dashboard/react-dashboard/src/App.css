@@ -1404,6 +1404,7 @@ h5 {
 
 .delete-icon,
 .edit-icon,
+.green-icon,
 .clear-filter-icon {
   width: 20px;
   height: 20px;
@@ -1411,6 +1412,7 @@ h5 {
   transition: all 0.1s ease;
 }
 
+.green-icon:hover,
 .delete-icon:hover,
 .edit-icon:hover,
 .clear-filter-icon:hover {
@@ -1426,6 +1428,10 @@ h5 {
 .delete-icon,
 .clear-filter-icon {
   fill: #a50a54;
+}
+
+.green-icon {
+  fill: #28c522;
 }
 
 .clear-filter-icon {

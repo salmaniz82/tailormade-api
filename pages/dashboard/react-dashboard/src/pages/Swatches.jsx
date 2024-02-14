@@ -292,6 +292,7 @@ export default function Swatches() {
                       <th>Image</th>
                       <th>Title</th>
                       <th>Status</th>
+
                       <th>&nbsp;</th>
                       <th>&nbsp;</th>
                     </tr>
@@ -307,7 +308,7 @@ export default function Swatches() {
                           </td>
                           <td>{swatch.title}</td>
 
-                          <th>
+                          <td>
                             <label className="switch" htmlFor={`checkbox-user-${swatch.id}`}>
                               <input
                                 type="checkbox"
@@ -319,15 +320,16 @@ export default function Swatches() {
                               />
                               <div className="slider round"></div>
                             </label>
-                          </th>
-                          <th>
+                          </td>
+
+                          <td>
                             <div onClick={(e) => handleNavigate(e, swatch.id)}>
                               <SlNote className="edit-icon" />
                             </div>
-                          </th>
-                          <th>
+                          </td>
+                          <td>
                             <SlTrash className="delete-icon" onClick={() => handleDelete(swatch.id)} />
-                          </th>
+                          </td>
                         </tr>
                       ))}
                   </tbody>

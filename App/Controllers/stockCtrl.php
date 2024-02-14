@@ -86,4 +86,21 @@ class stockCtrl extends BaseController
         $data["message"] = "Error while deleteing record";
         return View::responseJson($data, 200);
     }
+
+    public function update()
+    {
+        $id = \Framework\Route::$params['id'];
+        $payload = \Framework\Route::$_PUT;
+
+
+        if ($this->stockModule->update($payload, $id)) {
+            $data["message"] = "Stock updated successfully";
+            $statusCode = 200;
+            return View::responseJson($data, $statusCode);
+        }
+
+        $data["message"] = "Error while updating Stock";
+        $statusCode = 500;
+        return View::responseJson($data, $statusCode);
+    }
 }

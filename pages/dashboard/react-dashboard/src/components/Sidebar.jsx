@@ -20,7 +20,7 @@ export default function Sidebar() {
 
         <li>
           <span className="material-icons-outlined">inventory</span>
-          <Link to="/collections">Collections</Link>
+          <Link to="/stocks">Stocks</Link>
         </li>
 
         <li>
