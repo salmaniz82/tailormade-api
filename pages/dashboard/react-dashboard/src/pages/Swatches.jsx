@@ -215,6 +215,8 @@ export default function Swatches() {
         if (data.collections.length > 0) {
           console.log("set colleciton");
           setCollections(data.collections);
+        } else {
+          setCollections([]);
         }
 
         if (data.meta.pages != undefined) {
@@ -237,6 +239,7 @@ export default function Swatches() {
         if (data.filters.length > 0) {
           setFilters(data.filters);
         }
+        setFilters(data.filters);
 
         indicateActiveSource(data.meta.source);
       } catch (error) {
@@ -280,7 +283,9 @@ export default function Swatches() {
                     </div>
                   </div>
 
-                  {listMeta.source != "all" && <AccordianFilters filters={filters} setFilters={setFilters} selectedFilters={selectedFilters} setSelectedFilters={setSelectedFilters} />}
+                  {filters.length > 0 && listMeta.source != "all" && (
+                    <AccordianFilters filters={filters} setFilters={setFilters} selectedFilters={selectedFilters} setSelectedFilters={setSelectedFilters} />
+                  )}
                 </div>
 
                 <div className="swatch_apply_filters">
@@ -304,64 +309,70 @@ export default function Swatches() {
             </aside>
 
             <div className="swatches-dash-list">
-              <div className="pageStatusInfo">
-                <div className="pagesCount bg-white">
-                  Items : {(listMeta.page - 1) * parseInt(listMeta.limit) + 1} - {listMeta.page == listMeta.pages ? listMeta.total : collections.length * listMeta.page} / {listMeta.total}
+              {collections.length != 0 && (
+                <div className="pageStatusInfo">
+                  <div className="pagesCount bg-white">
+                    Items : {(listMeta.page - 1) * parseInt(listMeta.limit) + 1} - {listMeta.page == listMeta.pages ? listMeta.total : collections.length * listMeta.page} / {listMeta.total}
+                  </div>
+                  <SwatchPagination pages={pages} listMeta={listMeta} handlePaginate={handlePaginate} />
                 </div>
-                <SwatchPagination pages={pages} listMeta={listMeta} handlePaginate={handlePaginate} />
-              </div>
+              )}
 
-              <div className="list-items-table bg-white">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>ID </th>
-                      <th>Image</th>
-                      <th>Title</th>
-                      <th>Status</th>
+              {collections.length > 0 ? (
+                <div className="list-items-table bg-white">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>ID </th>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Status</th>
 
-                      <th>&nbsp;</th>
-                      <th>&nbsp;</th>
-                    </tr>
-                  </thead>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                      </tr>
+                    </thead>
 
-                  <tbody>
-                    {collections.length &&
-                      collections.map((swatch) => (
-                        <tr key={swatch.id}>
-                          <td>{swatch.id}</td>
-                          <td>
-                            <img src={`${API_BASE_URL}/${swatch.thumbnail}`} width="50" height={50} />
-                          </td>
-                          <td>{swatch.title}</td>
+                    <tbody>
+                      {collections.length &&
+                        collections.map((swatch) => (
+                          <tr key={swatch.id}>
+                            <td>{swatch.id}</td>
+                            <td>
+                              <img src={`${API_BASE_URL}/${swatch.thumbnail}`} width="50" height={50} />
+                            </td>
+                            <td>{swatch.title}</td>
 
-                          <td>
-                            <label className="switch" htmlFor={`checkbox-user-${swatch.id}`}>
-                              <input
-                                type="checkbox"
-                                className="user-check-toggle"
-                                id={`checkbox-user-${swatch.id}`}
-                                value={swatch.status}
-                                checked={swatch.status == 1}
-                                onChange={() => handleSwatchStatusToggle(swatch.id, swatch.status)}
-                              />
-                              <div className="slider round"></div>
-                            </label>
-                          </td>
+                            <td>
+                              <label className="switch" htmlFor={`checkbox-user-${swatch.id}`}>
+                                <input
+                                  type="checkbox"
+                                  className="user-check-toggle"
+                                  id={`checkbox-user-${swatch.id}`}
+                                  value={swatch.status}
+                                  checked={swatch.status == 1}
+                                  onChange={() => handleSwatchStatusToggle(swatch.id, swatch.status)}
+                                />
+                                <div className="slider round"></div>
+                              </label>
+                            </td>
 
-                          <td>
-                            <div onClick={(e) => handleNavigate(e, swatch.id)}>
-                              <SlNote className="edit-icon" />
-                            </div>
-                          </td>
-                          <td>
-                            <SlTrash className="delete-icon" onClick={() => handleDelete(swatch.id)} />
-                          </td>
-                        </tr>
-                      ))}
-                  </tbody>
-                </table>
-              </div>
+                            <td>
+                              <div onClick={(e) => handleNavigate(e, swatch.id)}>
+                                <SlNote className="edit-icon" />
+                              </div>
+                            </td>
+                            <td>
+                              <SlTrash className="delete-icon" onClick={() => handleDelete(swatch.id)} />
+                            </td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <div className="errorItemNOtfound bg-white">NOT RECORDS WERE FOUND</div>
+              )}
             </div>
           </div>
         </div>

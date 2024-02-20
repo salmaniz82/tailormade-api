@@ -16,7 +16,7 @@ $route->get('/swatch/{id}', 'swatchesCtrl@getSingle');
 
 $route->delete('/swatches/{id}', 'swatchesCtrl@deleteSwatches');
 
-$route->get('/devtest', 'swatchesCtrl@test');
+$route->get('/devtest?', 'swatchesCtrl@test');
 
 /* STORE SINGLE  */
 

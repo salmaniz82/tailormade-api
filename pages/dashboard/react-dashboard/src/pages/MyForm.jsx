@@ -3,6 +3,8 @@ import { API_BASE_URL, convertArrayToObject } from "../utils/helpers";
 import Select from "react-select";
 import { SlClose, SlEye, SlList, SlNote, SlTrash, SlPlus } from "react-icons/sl";
 
+import Loader from "../components/Loader.jsx";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -81,6 +83,7 @@ function MyForm() {
 
   async function sendSaveRequest(payload) {
     try {
+      setIsLoading(true);
       const response = await fetch(`${API_BASE_URL}swatches`, {
         method: "POST",
         body: payload
@@ -96,8 +99,11 @@ function MyForm() {
         toast.error(data.message);
         console.log("do error action");
       }
+
+      setIsLoading(false);
     } catch (error) {
       console.error(error);
+      setIsLoading(false);
     }
   }
 
@@ -132,6 +138,8 @@ function MyForm() {
     label: meta.title,
     metaFields: meta.metaFields
   }));
+
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     fetchMetaData();
@@ -208,11 +216,15 @@ function MyForm() {
         )}
       </div>
 
-      <div className="flashButtonWrapper mx-auto">
-        <div className="text_btn_lg" onClick={handleSubmit}>
-          SAVE
+      {!isLoading ? (
+        <div className="flashButtonWrapper mx-auto">
+          <div className="text_btn_lg" onClick={handleSubmit}>
+            SAVE
+          </div>
         </div>
-      </div>
+      ) : (
+        <Loader />
+      )}
 
       <ToastContainer />
     </form>

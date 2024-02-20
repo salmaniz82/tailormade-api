@@ -37,15 +37,29 @@ class swatchesCtrl
     {
 
 
-        $source = "foxflannel.com";
-
-        $data = $this->swatchModule->buildFilterDynamic($source);
 
 
-        var_dump($data);
+        $source = (isset($_GET['source']) && $_GET['source'] != "") ? $_GET['source'] : 'n/a';
+
+        $type = (isset($_GET['type']) && $_GET['type'] != "") ? $_GET['type'] : 's';
+
+        if ($source == "n/a")
+            die("source not provided");
 
 
+        if ($type == "d") {
+            echo "DYNAMIC filter <br>";
+            $data = $this->swatchModule->buildFilterDynamic($source) ?? [];
+            var_dump($data);
+            die();
+        }
 
+        if ($type == "s") {
+            echo "STATIC filter <br>";
+            $data = $this->swatchModule->getCachedFilters($source) ?? [];
+            var_dump($data);
+            die();
+        }
 
 
         /*
@@ -53,9 +67,6 @@ class swatchesCtrl
         var_dump($data);
         die();
         */
-
-
-
 
 
         /*
@@ -216,6 +227,7 @@ class swatchesCtrl
                 if ($lastId = $this->swatchModule->addSwatch($payload)) {
 
                     $data["message"] = "Swatch added ";
+                    $this->swatchModule->buildCachedFilters($payload['source']);
                     $data["code"] = 200;
                     return View::responseJson($data, 200);
                 } else {
@@ -280,9 +292,7 @@ class swatchesCtrl
     private function handleUpdate($id, $request)
     {
 
-        var_dump($request);
 
-        die();
 
         $payload['title'] = mysqli_real_escape_string($this->swatchModule->DB->connection, trim($request["title"]));
         $payload['productMeta'] = json_encode($request["productMeta"]);
@@ -292,6 +302,7 @@ class swatchesCtrl
             $data["message"] = "Swatch updated successfully";
             $data["code"] = 200;
             $statusCode = 200;
+            $this->swatchModule->buildCachedFilters($payload['source']);
             return View::responseJson($data, $statusCode);
             die();
         }
@@ -409,10 +420,14 @@ class swatchesCtrl
         $data["meta"]['pages'] = ceil($totalMatched / $paramsQuery['limit']);
         $data["meta"]['source'] = $paramsQuery['source'];
         // refactored dynamic filter
+
         /*
         $data['filters'] = $this->swatchModule->buildFilterDynamic($paramsQuery['source']);
         */
-        $data['filters'] = $this->swatchModule->getCachedFilters($paramsQuery['source']) || [];
+
+
+        $data['filters'] = $this->swatchModule->getCachedFilters($paramsQuery['source']) ?? [];
+
 
         $stockModule = $this->swatchModule = new \App\Modules\stockModule();
         $data['sources'] = $stockModule->swatchSources();
