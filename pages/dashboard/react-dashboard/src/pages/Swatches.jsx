@@ -224,10 +224,6 @@ export default function Swatches() {
           setPages((oldpages) => generatedPagesArray);
         }
 
-        if (data.filters != undefined) {
-          setFilters(response.filters);
-        }
-
         if (data.sources != undefined && swatchSources.length == 0) {
           setSwatchSources(data.sources);
         }
@@ -239,7 +235,6 @@ export default function Swatches() {
         if (data.filters.length > 0) {
           setFilters(data.filters);
         }
-        setFilters(data.filters);
 
         indicateActiveSource(data.meta.source);
       } catch (error) {
@@ -268,24 +263,26 @@ export default function Swatches() {
             <aside className="SwatchFilters">
               <div className="filterInner">
                 <div className="filterList bg-white">
-                  <div className="filter-labels">
-                    <div>
-                      <h5 className={`stock-list filter-accordion-header ${stockAccordian ? "active" : ""} `} onClick={() => setStockAccordian(!stockAccordian)}>
-                        - STOCK COLLECTIONS :
-                      </h5>
-                      <ul className="filter-list-items">
-                        {swatchSources.map((source, index) => (
-                          <li key={index} className={`${source.active ? "checkedFilterItem" : ""}`} onClick={(e) => handleSource(e, source.url)}>
-                            {source.name}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
+                  {/* DISABLE STOCK SELECTION */}
 
-                  {filters.length > 0 && listMeta.source != "all" && (
-                    <AccordianFilters filters={filters} setFilters={setFilters} selectedFilters={selectedFilters} setSelectedFilters={setSelectedFilters} />
+                  {false && (
+                    <div className="filter-labels">
+                      <div>
+                        <h5 className={`stock-list filter-accordion-header ${stockAccordian ? "active" : ""} `} onClick={() => setStockAccordian(!stockAccordian)}>
+                          - STOCK COLLECTIONS :
+                        </h5>
+                        <ul className="filter-list-items">
+                          {swatchSources.map((source, index) => (
+                            <li key={index} className={`${source.active ? "checkedFilterItem" : ""}`} onClick={(e) => handleSource(e, source.url)}>
+                              {source.name}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
                   )}
+
+                  {filters.length > 0 && <AccordianFilters filters={filters} setFilters={setFilters} selectedFilters={selectedFilters} setSelectedFilters={setSelectedFilters} />}
                 </div>
 
                 <div className="swatch_apply_filters">

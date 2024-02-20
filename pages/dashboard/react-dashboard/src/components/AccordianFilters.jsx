@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function AccordianFilters({ filters, setFilters, setSelectedFilters, selectedFilters }) {
-  const [activeFilterHeaders, setActiveFilterHeaders] = useState([]);
+  const [activeFilterHeaders, setActiveFilterHeaders] = useState(["Mill"]);
 
   const toggleAccordion = function (filterName) {
     setActiveFilterHeaders((prevActiveFilterHeaders) => {
@@ -29,7 +29,7 @@ function AccordianFilters({ filters, setFilters, setSelectedFilters, selectedFil
         const updatedFilters = [...prevSelectedFilters];
         updatedFilters[existingFilterIndex] = {
           filterHeader,
-          values: updatedValues,
+          values: updatedValues
         };
 
         return updatedFilters;

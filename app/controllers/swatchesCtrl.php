@@ -38,28 +38,36 @@ class swatchesCtrl
 
 
 
-
+        /*
         $source = (isset($_GET['source']) && $_GET['source'] != "") ? $_GET['source'] : 'n/a';
-
         $type = (isset($_GET['type']) && $_GET['type'] != "") ? $_GET['type'] : 's';
-
         if ($source == "n/a")
             die("source not provided");
+        */
+
+        $source = "foxflannel.com";
+
+        /*
+        $filterKeys = $this->swatchModule->getSourceFilterStaticKeys($source, false);
+        */
+
+        $source = "all";
+
+        /*
+        $data = $this->swatchModule->buildFilterDynamic("all");
+        var_dump($data);
+        die();
+        */
+
+        /*
+        $this->swatchModule->buildCachedFilters($source);
+        */
 
 
-        if ($type == "d") {
-            echo "DYNAMIC filter <br>";
-            $data = $this->swatchModule->buildFilterDynamic($source) ?? [];
-            var_dump($data);
-            die();
-        }
-
-        if ($type == "s") {
-            echo "STATIC filter <br>";
-            $data = $this->swatchModule->getCachedFilters($source) ?? [];
-            var_dump($data);
-            die();
-        }
+        /*
+        $data = $this->swatchModule->getCachedFilters($source);
+        var_dump($data);
+        */
 
 
         /*
@@ -94,6 +102,59 @@ class swatchesCtrl
         $swatch['imageUrl'];
         $swatch['thumbnail'];
         */
+    }
+
+    public function listSwatches()
+    {
+
+
+        $paramsQuery['page'] = (isset($_GET['page']) && is_numeric($_GET['page'])) ? $_GET['page'] : 1;
+        $paramsQuery['limit'] = (isset($_GET['limit']) && is_numeric($_GET['limit'])) ? $_GET['limit'] : 12;
+        $paramsQuery['offset'] = ($paramsQuery['page'] - 1) * $paramsQuery['limit'];
+        $paramsQuery['filteringActivate'] = (isset($_GET['filteringActivate']) && $_GET['filteringActivate'] != "") ? $_GET['filteringActivate'] : 'off';
+        $paramsQuery['source'] = (isset($_GET['source']) && $_GET['source'] != "") ? $_GET['source'] : 'all';
+        $paramsQuery['status'] = isset($_GET['status']) ?: '1';
+
+        if ($paramsQuery['filteringActivate'] == 'on') :
+            $filteryParamKeys = $this->swatchModule->getSourceFilterStaticKeys($paramsQuery['source']);
+            foreach ($filteryParamKeys as $key => $filterParamKey) :
+                if (isset($_GET[$filterParamKey]) && $_GET[$filterParamKey] != "")
+                    $paramsQuery[$filterParamKey] = trim($_GET[$filterParamKey]);
+            endforeach;
+        endif;
+
+
+        $data["meta"] = array(
+            "page" => $paramsQuery['page'],
+            "limit" => $paramsQuery['limit'],
+            "offset" => $paramsQuery['offset'],
+            "total" => 0
+        );
+
+        $data['collections'] = $this->swatchModule->getSwatces($paramsQuery);
+
+
+
+        $totalMatched = $this->swatchModule->getTotalMatched();
+        $data["meta"]["total"] = $totalMatched;
+        $data["meta"]['pages'] = ceil($totalMatched / $paramsQuery['limit']);
+        $data["meta"]['source'] = $paramsQuery['source'];
+        // refactored dynamic filter
+
+        /*
+        $data['filters'] = $this->swatchModule->buildFilterDynamic($paramsQuery['source']);
+        */
+
+
+        $data['filters'] = $this->swatchModule->getCachedFilters($paramsQuery['source']) ?? [];
+
+
+        $stockModule = $this->swatchModule = new \App\Modules\stockModule();
+        $data['sources'] = $stockModule->swatchSources();
+
+        return View::responseJson($data, 200);
+
+        die();
     }
 
     public function unlinkSwatchImages($id)
@@ -384,58 +445,7 @@ class swatchesCtrl
     }
 
 
-    public function listSwatches()
-    {
 
-
-        $paramsQuery['page'] = (isset($_GET['page']) && is_numeric($_GET['page'])) ? $_GET['page'] : 1;
-        $paramsQuery['limit'] = (isset($_GET['limit']) && is_numeric($_GET['limit'])) ? $_GET['limit'] : 12;
-        $paramsQuery['offset'] = ($paramsQuery['page'] - 1) * $paramsQuery['limit'];
-        $paramsQuery['filteringActivate'] = (isset($_GET['filteringActivate']) && $_GET['filteringActivate'] != "") ? $_GET['filteringActivate'] : 'off';
-        $paramsQuery['source'] = (isset($_GET['source']) && $_GET['source'] != "") ? $_GET['source'] : 'all';
-        $paramsQuery['status'] = isset($_GET['status']) ?: '1';
-
-        if ($paramsQuery['filteringActivate'] == 'on') :
-            $filteryParamKeys = $this->swatchModule->getSourceFilterStaticKeys($paramsQuery['source']);
-            foreach ($filteryParamKeys as $key => $filterParamKey) :
-                if (isset($_GET[$filterParamKey]) && $_GET[$filterParamKey] != "")
-                    $paramsQuery[$filterParamKey] = trim($_GET[$filterParamKey]);
-            endforeach;
-        endif;
-
-
-        $data["meta"] = array(
-            "page" => $paramsQuery['page'],
-            "limit" => $paramsQuery['limit'],
-            "offset" => $paramsQuery['offset'],
-            "total" => 0
-        );
-
-        $data['collections'] = $this->swatchModule->getSwatces($paramsQuery);
-
-
-
-        $totalMatched = $this->swatchModule->getTotalMatched();
-        $data["meta"]["total"] = $totalMatched;
-        $data["meta"]['pages'] = ceil($totalMatched / $paramsQuery['limit']);
-        $data["meta"]['source'] = $paramsQuery['source'];
-        // refactored dynamic filter
-
-        /*
-        $data['filters'] = $this->swatchModule->buildFilterDynamic($paramsQuery['source']);
-        */
-
-
-        $data['filters'] = $this->swatchModule->getCachedFilters($paramsQuery['source']) ?? [];
-
-
-        $stockModule = $this->swatchModule = new \App\Modules\stockModule();
-        $data['sources'] = $stockModule->swatchSources();
-
-        return View::responseJson($data, 200);
-
-        die();
-    }
 
     public function writeToFile($data, $filepath)
     {

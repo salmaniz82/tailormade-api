@@ -115,33 +115,13 @@ class swatchesModule
     public function getSourceFilterStaticKeys($source, $clean = false)
     {
 
-        $outputArrayKeys = [];
-        return $this->dynamicDBFilters($source, $clean);
-
-        /*
-        die();
-        if ($source == 'foxflannel.com')
-            $outputArrayKeys = ['MILL', 'BUNCH', 'COLOUR', 'SEASON', 'WEIGHT', 'PATTERN', 'COMPOSITION', 'DESCRIPTION'];
-        if ($source == 'shop.dugdalebros.com')
-        
-            $outputArrayKeys = ['material', 'Width', 'Weight', 'Bunch_Name', 'Bunch_Number'];
-
-        if ($source == 'harrisons1863.com')
-            $outputArrayKeys = ['brand', 'color', 'weight', 'material', 'collection', 'stockLength', 'longestSingleLength'];
-
-        if ($source == 'loropiana.com')
-            $outputArrayKeys = ['size', 'Width', 'bunch', 'style', 'Family', 'Weight', 'Subfamily', 'Composition', 'Weight_g/_mu00b2', 'Mood'];
-
-        if ($clean == true) {
-            $withoutUnderScore = array_map(function ($value) {
-                return str_replace('_', ' ', $value);
-            }, $outputArrayKeys);
-
-            return $withoutUnderScore;
+        $filterHeaderKeys = [];
+        if ($source == "all") {
+            $filterHeaderKeys = ['Mill', 'Bunch', 'Description', 'Composition', 'Weight', 'Season', 'Garment Type'];
+        } else {
+            $filterHeaderKeys = $this->dynamicDBFilters($source, $clean);
         }
-
-        return $outputArrayKeys;
-        */
+        return !$clean ? $this->replaceSpacesWithUnderscores($filterHeaderKeys) : $filterHeaderKeys;
     }
 
     public function replaceSpacesWithUnderscores(array $array): array
@@ -169,7 +149,7 @@ class swatchesModule
             $data = $result->fetch_all(MYSQLI_ASSOC);
             $metaFieldsArray = json_decode($data[0]['metaFields']);
 
-            return !$clean ? $this->replaceSpacesWithUnderscores($metaFieldsArray) : $metaFieldsArray;
+            return  $metaFieldsArray;
         }
     }
 
@@ -298,11 +278,20 @@ class swatchesModule
     public function getUniqueFilterValues($filterKey, $source)
     {
 
+        if ($source !=  "all") {
 
-        $query = "SELECT DISTINCT 
+            $query = "SELECT DISTINCT 
             JSON_UNQUOTE(JSON_EXTRACT(productMeta, '$.\"{$filterKey}\"')) 
             AS key_value
             FROM swatches WHERE SOURCE = '{$source}' AND status = 1";
+        } else {
+
+            $query = "SELECT DISTINCT 
+            JSON_UNQUOTE(JSON_EXTRACT(productMeta, '$.\"{$filterKey}\"')) 
+            AS key_value
+            FROM swatches WHERE status = 1";
+        }
+
 
         $stmt = $this->DB->connection->prepare($query);
         $stmt->execute();
@@ -327,7 +316,7 @@ class swatchesModule
     }
 
 
-    
+
 
     public function buildFilterDynamic($source)
     {
