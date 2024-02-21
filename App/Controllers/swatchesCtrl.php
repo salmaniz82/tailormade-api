@@ -187,6 +187,7 @@ class swatchesCtrl
 
         if ($this->swatchModule->delete($id)) {
             $data["message"] = "Swatch Deleted!";
+            $this->swatchModule->buildCachedFilters('all');
             return View::responseJson($data, 200);
         }
 
@@ -288,7 +289,7 @@ class swatchesCtrl
                 if ($lastId = $this->swatchModule->addSwatch($payload)) {
 
                     $data["message"] = "Swatch added ";
-                    $this->swatchModule->buildCachedFilters($payload['source']);
+                    $this->swatchModule->buildCachedFilters('all');
                     $data["code"] = 200;
                     return View::responseJson($data, 200);
                 } else {
@@ -322,7 +323,6 @@ class swatchesCtrl
         }
 
 
-
         $data["message"] = "Failed while fetching swatch meta data";
         return View::responseJson($data, 500);
         die();
@@ -339,6 +339,7 @@ class swatchesCtrl
             $data["message"] = "Status updated ";
             $data["operation-status"] = 'ok';
             $statusCode = 200;
+            $this->swatchModule->buildCachedFilters('all');
         } else {
 
             $data["message"] = "Error while updating status";
@@ -363,7 +364,7 @@ class swatchesCtrl
             $data["message"] = "Swatch updated successfully";
             $data["code"] = 200;
             $statusCode = 200;
-            $this->swatchModule->buildCachedFilters($payload['source']);
+
             return View::responseJson($data, $statusCode);
             die();
         }

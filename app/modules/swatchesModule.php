@@ -194,7 +194,7 @@ class swatchesModule
 
         $query .= " AND  trashed = 0 ";
 
-        $query .= " LIMIT {$offset},  {$limit}";
+        $query .= "ORDER BY id ASC LIMIT {$offset},  {$limit}  ";
         $stmt = $this->DB->connection->prepare($query);
         $stmt->execute();
         $result = $stmt->get_result();
